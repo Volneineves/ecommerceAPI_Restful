@@ -4,7 +4,7 @@
 </p>
 
 <h1 align="center">💻Residência de Software</h1>
-<h2 align="center">Projeto 01 - dvdrental</h2>
+<h2 align="center">Projeto Final - Ecommerce</h2>
 
 <table align="center">
   <tr>
