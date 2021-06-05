@@ -50,6 +50,8 @@ public class ClienteService {
         return clienteRepository.save(cliente);
     }
 
+
+
     /*
                     OBS      analisar necessidade.
 
