@@ -1,20 +1,22 @@
 package com.residencia.ecommerce.entities;
 
 import javax.persistence.*;
-import java.sql.Date;
-import java.util.Collection;
+import java.math.BigDecimal;
+import java.util.Calendar;
+import java.util.List;
 
 @Entity
+@Table(name = "produto")
 public class Produto {
     private Integer produtoId;
     private String nomeProduto;
     private String descricaoProduto;
-    private Object precoProduto;
+    private BigDecimal precoProduto;
     private Integer qtdEstoque;
-    private Date dataCadastroProduto;
-    private byte[] imagem;
-    private Categoria categoriaByCategoriaId;
-    private Collection<ProdutoPedido> produtoPedidosByProdutoId;
+    private Calendar dataCadastroProduto;
+    private String imagem;
+    private Categoria categoria;
+    private List<ProdutoPedido> produtoPedido;
 
     @Id
     @Column(name = "produto_id")
@@ -48,11 +50,11 @@ public class Produto {
 
     
     @Column(name = "preco_produto")
-    public Object getPrecoProduto() {
+    public BigDecimal getPrecoProduto() {
         return precoProduto;
     }
 
-    public void setPrecoProduto(Object precoProduto) {
+    public void setPrecoProduto(BigDecimal precoProduto) {
         this.precoProduto = precoProduto;
     }
 
@@ -68,40 +70,39 @@ public class Produto {
 
     
     @Column(name = "data_cadastro_produto")
-    public Date getDataCadastroProduto() {
+    public Calendar getDataCadastroProduto() {
         return dataCadastroProduto;
     }
 
-    public void setDataCadastroProduto(Date dataCadastroProduto) {
+    public void setDataCadastroProduto(Calendar dataCadastroProduto) {
         this.dataCadastroProduto = dataCadastroProduto;
     }
-
     
     @Column(name = "imagem")
-    public byte[] getImagem() {
+    public String getImagem() {
         return imagem;
     }
 
-    public void setImagem(byte[] imagem) {
+    public void setImagem(String imagem) {
         this.imagem = imagem;
     }
 
     @ManyToOne
     @JoinColumn(name = "categoria_id", referencedColumnName = "categoria_id", nullable = false)
-    public Categoria getCategoriaByCategoriaId() {
-        return categoriaByCategoriaId;
+    public Categoria getCategoria() {
+        return categoria;
     }
 
-    public void setCategoriaByCategoriaId(Categoria categoriaByCategoriaId) {
-        this.categoriaByCategoriaId = categoriaByCategoriaId;
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 
     @OneToMany(mappedBy = "produtoByProdutoId")
-    public Collection<ProdutoPedido> getProdutoPedidosByProdutoId() {
-        return produtoPedidosByProdutoId;
+    public List<ProdutoPedido> getProdutoPedidos() {
+        return produtoPedido;
     }
 
-    public void setProdutoPedidosByProdutoId(Collection<ProdutoPedido> produtoPedidosByProdutoId) {
-        this.produtoPedidosByProdutoId = produtoPedidosByProdutoId;
+    public void setProdutoPedidos(List<ProdutoPedido> produtoPedido) {
+        this.produtoPedido = produtoPedido;
     }
 }

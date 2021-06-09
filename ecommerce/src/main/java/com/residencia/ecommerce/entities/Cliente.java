@@ -1,8 +1,8 @@
 package com.residencia.ecommerce.entities;
 
 import javax.persistence.*;
-import java.sql.Date;
-import java.util.Collection;
+import java.util.Calendar;
+import java.util.List;
 
 @Entity
 public class Cliente {
@@ -13,8 +13,8 @@ public class Cliente {
     private String nome;
     private String cpf;
     private String telefone;
-    private Date dataNascimento;
-    private Collection<Pedido> pedidosByClienteId;
+    private Calendar dataNascimento;
+    private List<Pedido> pedidosByClienteId;
 
     @Id
     @Column(name = "cliente_id")
@@ -88,11 +88,11 @@ public class Cliente {
 
     
     @Column(name = "data_nascimento")
-    public Date getDataNascimento() {
+    public Calendar getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(Date dataNascimento) {
+    public void setDataNascimento(Calendar dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 
@@ -109,11 +109,11 @@ public class Cliente {
     }
 
     @OneToMany(mappedBy = "clienteByClienteId")
-    public Collection<Pedido> getPedidosByClienteId() {
+    public List<Pedido> getPedidosByClienteId() {
         return pedidosByClienteId;
     }
 
-    public void setPedidosByClienteId(Collection<Pedido> pedidosByClienteId) {
+    public void setPedidosByClienteId(List<Pedido> pedidosByClienteId) {
         this.pedidosByClienteId = pedidosByClienteId;
     }
 }

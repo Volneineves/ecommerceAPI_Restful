@@ -1,8 +1,6 @@
 package com.residencia.ecommerce.services;
 
-import com.residencia.ecommerce.entities.Categoria;
 import com.residencia.ecommerce.entities.Cliente;
-
 import com.residencia.ecommerce.repositories.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,8 +15,7 @@ public class ClienteService {
 //******************************************************************************************************************
 
     public Cliente findById (Integer id){
-        Cliente cliente = clienteRepository.findById(id).get();
-        return cliente;
+        return clienteRepository.findById(id).get();
     }
 //******************************************************************************************************************
 

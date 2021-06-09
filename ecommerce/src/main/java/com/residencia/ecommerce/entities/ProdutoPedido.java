@@ -1,13 +1,14 @@
 package com.residencia.ecommerce.entities;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "produto_pedido", schema = "public", catalog = "ecommerce_api_grupo7")
 public class ProdutoPedido {
     private Integer produtoPedidoId;
     private Integer qtdProdutoPedido;
-    private Object precoProdutoPedido;
+    private BigDecimal precoProdutoPedido;
     private Produto produtoByProdutoId;
     private Pedido pedidoByPedidoId;
 
@@ -31,11 +32,11 @@ public class ProdutoPedido {
     }
 
     @Column(name = "preco_produto_pedido")
-    public Object getPrecoProdutoPedido() {
+    public BigDecimal getPrecoProdutoPedido() {
         return precoProdutoPedido;
     }
 
-    public void setPrecoProdutoPedido(Object precoProdutoPedido) {
+    public void setPrecoProdutoPedido(BigDecimal precoProdutoPedido) {
         this.precoProdutoPedido = precoProdutoPedido;
     }
 
