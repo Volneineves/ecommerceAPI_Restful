@@ -1,7 +1,7 @@
 package com.residencia.ecommerce.entities;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.List;
 
 @Entity
 public class Endereco {
@@ -13,6 +13,7 @@ public class Endereco {
     private String numero;
     private String complemento;
     private String uf;
+    private List<Cliente> clientesByEnderecoId;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -95,14 +96,13 @@ public class Endereco {
         this.uf = uf;
     }
 
-    @OneToMany(mappedBy = "enderecoByEnderecoId")
-    private Collection<Cliente> clientesByEnderecoId;
 
-    public Collection<Cliente> getClientesByEnderecoId() {
+    @OneToMany(mappedBy = "enderecoByEnderecoId")
+    public List<Cliente> getClientesByEnderecoId() {
         return clientesByEnderecoId;
     }
 
-    public void setClientesByEnderecoId(Collection<Cliente> clientesByEnderecoId) {
+    public void setClientesByEnderecoId(List<Cliente> clientesByEnderecoId) {
         this.clientesByEnderecoId = clientesByEnderecoId;
     }
 }

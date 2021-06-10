@@ -14,6 +14,7 @@ public class Cliente {
     private String cpf;
     private String telefone;
     private Calendar dataNascimento;
+    private Endereco enderecoByEnderecoId;
     private List<Pedido> pedidosByClienteId;
 
     @Id
@@ -96,10 +97,9 @@ public class Cliente {
         this.dataNascimento = dataNascimento;
     }
 
+
     @ManyToOne
     @JoinColumn(name = "endereco_id", referencedColumnName = "endereco_id")
-    private Endereco enderecoByEnderecoId;
-
     public Endereco getEnderecoByEnderecoId() {
         return enderecoByEnderecoId;
     }

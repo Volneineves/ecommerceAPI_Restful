@@ -1,14 +1,17 @@
 package com.residencia.ecommerce.entities;
 
-import javax.persistence.*;
-import java.util.Collection;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 public class Categoria {
     private Integer categoriaId;
     private String nomeCategoria;
     private String descricaoCategoria;
-    private Collection<Produto> produtosByCategoriaId;
+    private List<Produto> produtosByCategoriaId;
 
     @Id
     @Column(name = "categoria_id")
@@ -40,12 +43,12 @@ public class Categoria {
         this.descricaoCategoria = descricaoCategoria;
     }
 
-    @OneToMany(mappedBy = "categoriaByCategoriaId")
-    public Collection<Produto> getProdutosByCategoriaId() {
+    @OneToMany(mappedBy = "categoria")
+    public List<Produto> getProdutosByCategoriaId() {
         return produtosByCategoriaId;
     }
 
-    public void setProdutosByCategoriaId(Collection<Produto> produtosByCategoriaId) {
+    public void setProdutosByCategoriaId(List<Produto> produtosByCategoriaId) {
         this.produtosByCategoriaId = produtosByCategoriaId;
     }
 }
