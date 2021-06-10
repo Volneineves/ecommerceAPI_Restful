@@ -13,6 +13,7 @@ public class ProdutoPedido {
     private Pedido pedidoByPedidoId;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "produto_pedido_id")
     public Integer getProdutoPedidoId() {
         return produtoPedidoId;

@@ -18,7 +18,7 @@ public class CategoriaController {
     public CategoriaService categoriaService;
 
     @GetMapping("/{nome}")
-    public ResponseEntity<CategoriaVO> findById(@PathVariable String nome) {
+    public ResponseEntity<CategoriaVO> findByNome(@PathVariable String nome) {
         HttpHeaders headers = new HttpHeaders();
         return new ResponseEntity<>(categoriaService.findByNomeCat(nome), headers, HttpStatus.OK);
     }
@@ -37,6 +37,18 @@ public class CategoriaController {
     @GetMapping("/count")
     public Long count() {
         return categoriaService.count();
+    }
+
+    @PostMapping
+    public ResponseEntity<CategoriaVO> save(@RequestBody CategoriaVO categoriaVO) {
+        HttpHeaders headers = new HttpHeaders();
+
+        CategoriaVO novaOrderVO = categoriaService.saveVO(categoriaVO);
+
+        if (null != novaOrderVO)
+            return new ResponseEntity<>(novaOrderVO, headers, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(null, headers, HttpStatus.BAD_REQUEST);
     }
 
 }

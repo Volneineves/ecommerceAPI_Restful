@@ -58,20 +58,11 @@ import java.util.List;
 
 //******************************************************************************************************************
 
+    public CategoriaVO saveVO(CategoriaVO categoriaVO) {
+        Categoria novaCategoria = converteVOParaEntidade(categoriaVO);
+        Categoria categoria = categoriaRepository.save(novaCategoria);
 
-    public long count() {
-        return categoriaRepository.count();
-    }
-
-//******************************************************************************************************************
-
-    public Categoria save (Categoria categoria){
-        Categoria novaCategoria = categoriaRepository.save(categoria);
-        if(novaCategoria.getCategoriaId()!=null){
-            return novaCategoria;
-        }
-        else{ return null; }
-
+        return converteEntidadeParaVO(categoria);
     }
 //********************************************************************************************************************
 
@@ -117,8 +108,31 @@ import java.util.List;
         return categoriaVO;
     }
 
+    private Categoria converteVOParaEntidade (CategoriaVO categoriaVO) {
+        Categoria categoria = new Categoria();
+        
+        categoria.setCategoriaId(categoriaVO.getCategoriaId());
+        categoria.setNomeCategoria(categoriaVO.getNomeCategoria());
+        categoria.setDescricaoCategoria(categoriaVO.getDescricaoCategoria());
 
+        List<Produto> listProduto = new ArrayList<>();
+        for (ProdutoVO lProdutoVO : categoriaVO.getProdutosByCategoriaId()) {
+            Produto produto = new Produto();
 
+            produto.setProdutoId(lProdutoVO.getProdutoId());
+            produto.setNomeProduto(lProdutoVO.getNomeProduto());
+            produto.setDescricaoProduto(lProdutoVO.getDescricaoProduto());
+            produto.setPrecoProduto(lProdutoVO.getPrecoProduto());
+            produto.setQtdEstoque(lProdutoVO.getQtdEstoque());
+            produto.setImagem(lProdutoVO.getImagem());
 
+            listProduto.add(produto);
+            categoria.setProdutosByCategoriaId(listProduto);
+        }
+        return categoria;
+    }
 
+    public long count() {
+        return categoriaRepository.count();
+    }
 }

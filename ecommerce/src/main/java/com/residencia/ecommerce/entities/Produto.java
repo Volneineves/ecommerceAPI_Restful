@@ -19,6 +19,7 @@ public class Produto {
     private List<ProdutoPedido> produtoPedido;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "produto_id")
     public Integer getProdutoId() {
         return produtoId;

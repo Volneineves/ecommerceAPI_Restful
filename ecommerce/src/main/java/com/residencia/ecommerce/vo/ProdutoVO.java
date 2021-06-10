@@ -1,10 +1,6 @@
 package com.residencia.ecommerce.vo;
 
-import com.residencia.ecommerce.entities.Categoria;
-import com.residencia.ecommerce.entities.ProdutoPedido;
-
 import java.math.BigDecimal;
-import java.util.List;
 
 public class ProdutoVO {
     private Integer produtoId;
@@ -13,8 +9,6 @@ public class ProdutoVO {
     private BigDecimal precoProduto;
     private Integer qtdEstoque;
     private String imagem;
-    private Categoria categoria;
-    private List<ProdutoPedido> produtoPedido;
 
     public Integer getProdutoId() {
         return produtoId;
@@ -62,21 +56,5 @@ public class ProdutoVO {
 
     public void setImagem(String imagem) {
         this.imagem = imagem;
-    }
-
-    public Categoria getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
-    }
-
-    public List<ProdutoPedido> getProdutoPedido() {
-        return produtoPedido;
-    }
-
-    public void setProdutoPedido(List<ProdutoPedido> produtoPedido) {
-        this.produtoPedido = produtoPedido;
     }
 }

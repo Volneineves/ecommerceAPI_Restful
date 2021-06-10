@@ -18,6 +18,7 @@ public class Cliente {
     private List<Pedido> pedidosByClienteId;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cliente_id")
     public Integer getClienteId() {
         return clienteId;

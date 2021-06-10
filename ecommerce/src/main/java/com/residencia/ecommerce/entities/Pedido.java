@@ -3,7 +3,6 @@ package com.residencia.ecommerce.entities;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -14,11 +13,11 @@ public class Pedido {
     private BigDecimal valorTotalPedido;
     private Date dataPedido;
     private Boolean status;
-    private Integer clienteId;
     private Cliente clienteByClienteId;
     private List<ProdutoPedido> produtoPedidosByPedidoId;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pedido_id")
     public Integer getPedidoId() {
         return pedidoId;
@@ -68,7 +67,6 @@ public class Pedido {
         this.dataPedido = dataPedido;
     }
 
-    
     @Column(name = "status")
     public Boolean getStatus() {
         return status;
@@ -76,16 +74,6 @@ public class Pedido {
 
     public void setStatus(Boolean status) {
         this.status = status;
-    }
-
-    
-    @Column(name = "cliente_id")
-    public Integer getClienteId() {
-        return clienteId;
-    }
-
-    public void setClienteId(Integer clienteId) {
-        this.clienteId = clienteId;
     }
 
     @ManyToOne

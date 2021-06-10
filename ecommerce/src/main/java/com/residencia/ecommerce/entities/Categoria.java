@@ -1,9 +1,6 @@
 package com.residencia.ecommerce.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -14,6 +11,7 @@ public class Categoria {
     private List<Produto> produtosByCategoriaId;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "categoria_id")
     public Integer getCategoriaId() {
         return categoriaId;
