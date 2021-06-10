@@ -16,13 +16,12 @@ public class PedidoService {
     public PedidoRepository pedidoRepository;
 //******************************************************************************************************************
 
-    public Pedido findById (Integer id){
-        Pedido pedido = pedidoRepository.findById(id).get();
-        return pedido;
+    public Pedido findById(Integer id) {
+        return pedidoRepository.findById(id).get();
     }
 //******************************************************************************************************************
 
-    public List<Pedido> findAll(Integer id){
+    public List<Pedido> findAll(Integer id) {
         return pedidoRepository.findAll();
     }
 
@@ -35,21 +34,21 @@ public class PedidoService {
 
 //******************************************************************************************************************
 
-    public Pedido save (Pedido pedido){
+    public Pedido save(Pedido pedido) {
         Pedido novoPedido = pedidoRepository.save(pedido);
-        if(novoPedido.getPedidoId()!=null){
+        if (novoPedido.getPedidoId() != null) {
             return novoPedido;
+        } else {
+            return null;
         }
-        else{ return null; }
 
     }
 //********************************************************************************************************************
 
-    public Pedido update(Pedido pedido ){
+    public Pedido update(Pedido pedido) {
 
         return pedidoRepository.save(pedido);
     }
-
 
 
 //********************************************************************************************************************

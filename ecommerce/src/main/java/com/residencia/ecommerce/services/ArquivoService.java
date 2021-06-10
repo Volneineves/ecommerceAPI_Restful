@@ -1,19 +1,16 @@
 package com.residencia.ecommerce.services;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-
 import com.residencia.ecommerce.exceptions.ArquivosException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 
 @Service
@@ -41,7 +38,7 @@ public class ArquivoService {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
         try {
-            if(fileName.contains("..")) {
+            if (fileName.contains("..")) {
                 throw new ArquivosException("Nome de arquivo inválido! " + fileName);
             }
             // Copia/Sobrescrita do arquivo na pasta de destino
@@ -58,7 +55,7 @@ public class ArquivoService {
         String fileName = StringUtils.cleanPath(file);
 
         try {
-            if(fileName.contains("..")) {
+            if (fileName.contains("..")) {
                 throw new ArquivosException("Desculpe, o nome do arquivo contém uma sequência de caminho inválida! " + fileName);
             }
             Path targetLocation = this.fileStorageLocation.resolve(fileName);

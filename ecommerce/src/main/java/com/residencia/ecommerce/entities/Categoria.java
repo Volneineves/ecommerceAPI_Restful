@@ -21,7 +21,7 @@ public class Categoria {
         this.categoriaId = categoriaId;
     }
 
-    
+
     @Column(name = "nome_categoria")
     public String getNomeCategoria() {
         return nomeCategoria;
@@ -31,7 +31,7 @@ public class Categoria {
         this.nomeCategoria = nomeCategoria;
     }
 
-    
+
     @Column(name = "descricao_categoria")
     public String getDescricaoCategoria() {
         return descricaoCategoria;

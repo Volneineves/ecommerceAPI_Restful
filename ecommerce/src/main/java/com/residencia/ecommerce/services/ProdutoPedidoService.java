@@ -15,13 +15,12 @@ public class ProdutoPedidoService {
     public ProdutoPedidoRepository produtoPedidoRepository;
 //******************************************************************************************************************
 
-    public ProdutoPedido findById (Integer id){
-        ProdutoPedido produtoPedido = produtoPedidoRepository.findById(id).get();
-        return produtoPedido;
+    public ProdutoPedido findById(Integer id) {
+        return produtoPedidoRepository.findById(id).get();
     }
 //******************************************************************************************************************
 
-    public List<ProdutoPedido> findAll(Integer id){
+    public List<ProdutoPedido> findAll(Integer id) {
         return produtoPedidoRepository.findAll();
     }
 
@@ -34,21 +33,21 @@ public class ProdutoPedidoService {
 
 //******************************************************************************************************************
 
-    public ProdutoPedido save (ProdutoPedido produtoPedido){
+    public ProdutoPedido save(ProdutoPedido produtoPedido) {
         ProdutoPedido novoProdutoPedido = produtoPedidoRepository.save(produtoPedido);
-        if(novoProdutoPedido.getProdutoPedidoId()!=null){
+        if (novoProdutoPedido.getProdutoPedidoId() != null) {
             return novoProdutoPedido;
+        } else {
+            return null;
         }
-        else{ return null; }
 
     }
 //********************************************************************************************************************
 
-    public ProdutoPedido update(ProdutoPedido produtoPedido ){
+    public ProdutoPedido update(ProdutoPedido produtoPedido) {
 
         return produtoPedidoRepository.save(produtoPedido);
     }
-
 
 
 //********************************************************************************************************************

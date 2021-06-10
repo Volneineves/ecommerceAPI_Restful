@@ -2,7 +2,6 @@ package com.residencia.ecommerce.services;
 
 import com.residencia.ecommerce.entities.Cliente;
 import com.residencia.ecommerce.entities.Pedido;
-import com.residencia.ecommerce.entities.Produto;
 import com.residencia.ecommerce.repositories.ClienteRepository;
 import com.residencia.ecommerce.repositories.PedidoRepository;
 import com.residencia.ecommerce.vo.ClienteVO;
@@ -12,8 +11,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +24,7 @@ public class ClienteService {
     public PedidoRepository pedidoRepository;
 //******************************************************************************************************************
 
-    public ClienteVO findById (Integer id){
+    public ClienteVO findById(Integer id) {
         Cliente cliente = clienteRepository.findById(id).get();
         return converteEntidadeParaVO(cliente);
     }
@@ -98,7 +95,7 @@ public class ClienteService {
 
 //******************************************************************************************************************
 
-    private ClienteVO converteEntidadeParaVO(Cliente cliente){
+    private ClienteVO converteEntidadeParaVO(Cliente cliente) {
         ClienteVO clienteVO = new ClienteVO();
         List<PedidoVO> listPedidoVO = new ArrayList<>();
 
@@ -143,23 +140,22 @@ public class ClienteService {
         cliente.setTelefone(clienteVO.getTelefone());
         cliente.setDataNascimento(clienteVO.getDataNascimento());
 
-            for (PedidoVO lPedidoVO : clienteVO.getPedidosByClienteId()){
-                Pedido pedido = new Pedido();
+        for (PedidoVO lPedidoVO : clienteVO.getPedidosByClienteId()) {
+            Pedido pedido = new Pedido();
 
-                pedido.setPedidoId(lPedidoVO.getPedidoId());
-                pedido.setNumeroPedido(lPedidoVO.getNumeroPedido());
-                pedido.setListaProdutosDoPedido(lPedidoVO.getListaProdutosDoPedido());
-                pedido.setValorTotalPedido(lPedidoVO.getValorTotalPedido());
-                pedido.setDataPedido(lPedidoVO.getDataPedido());
-                pedido.setStatus(lPedidoVO.getStatus());
+            pedido.setPedidoId(lPedidoVO.getPedidoId());
+            pedido.setNumeroPedido(lPedidoVO.getNumeroPedido());
+            pedido.setListaProdutosDoPedido(lPedidoVO.getListaProdutosDoPedido());
+            pedido.setValorTotalPedido(lPedidoVO.getValorTotalPedido());
+            pedido.setDataPedido(lPedidoVO.getDataPedido());
+            pedido.setStatus(lPedidoVO.getStatus());
 
-                listPedido.add(pedido);
+            listPedido.add(pedido);
         }
         cliente.setPedidosByClienteId(listPedido);
 
         return cliente;
     }
-
 
 
 }

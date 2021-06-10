@@ -29,7 +29,7 @@ public class Produto {
         this.produtoId = produtoId;
     }
 
-    
+
     @Column(name = "nome_produto")
     public String getNomeProduto() {
         return nomeProduto;
@@ -39,7 +39,7 @@ public class Produto {
         this.nomeProduto = nomeProduto;
     }
 
-    
+
     @Column(name = "descricao_produto")
     public String getDescricaoProduto() {
         return descricaoProduto;
@@ -49,7 +49,7 @@ public class Produto {
         this.descricaoProduto = descricaoProduto;
     }
 
-    
+
     @Column(name = "preco_produto")
     public BigDecimal getPrecoProduto() {
         return precoProduto;
@@ -59,7 +59,7 @@ public class Produto {
         this.precoProduto = precoProduto;
     }
 
-    
+
     @Column(name = "qtd_estoque")
     public Integer getQtdEstoque() {
         return qtdEstoque;
@@ -69,7 +69,7 @@ public class Produto {
         this.qtdEstoque = qtdEstoque;
     }
 
-    
+
     @Column(name = "data_cadastro_produto")
     public Calendar getDataCadastroProduto() {
         return dataCadastroProduto;
@@ -78,7 +78,7 @@ public class Produto {
     public void setDataCadastroProduto(Calendar dataCadastroProduto) {
         this.dataCadastroProduto = dataCadastroProduto;
     }
-    
+
     @Column(name = "imagem")
     public String getImagem() {
         return imagem;

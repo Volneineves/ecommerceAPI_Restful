@@ -22,7 +22,7 @@ public class ProdutoPedido {
     public void setProdutoPedidoId(Integer produtoPedidoId) {
         this.produtoPedidoId = produtoPedidoId;
     }
-    
+
     @Column(name = "qtd_produto_pedido")
     public Integer getQtdProdutoPedido() {
         return qtdProdutoPedido;

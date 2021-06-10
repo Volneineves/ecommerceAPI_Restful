@@ -14,10 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-    public class CategoriaService {
+public class CategoriaService {
 
-@Autowired
+    @Autowired
     public CategoriaRepository categoriaRepository;
+
 //******************************************************************************************************************
 
     public CategoriaVO findByNomeCat(String nome) {
@@ -51,9 +52,15 @@ import java.util.List;
                 }
             }
         } catch (Exception e) {
-            throw new Exception("Não foi possível recuperar a lista de pedidos ::" + e.getMessage());
+            throw new Exception("Não foi possível recuperar a lista de categorias ::" + e.getMessage());
         }
         return listCategoriaVO;
+    }
+
+//******************************************************************************************************************
+
+    public long count() {
+        return categoriaRepository.count();
     }
 
 //******************************************************************************************************************
@@ -64,20 +71,25 @@ import java.util.List;
 
         return converteEntidadeParaVO(categoria);
     }
+
 //********************************************************************************************************************
 
-    public Categoria update(Categoria categoria ){
+    public Categoria update(Integer id, Categoria categoria) {
+        Categoria newCategoria = categoriaRepository.findById(id).get();
+        updateDados(newCategoria, categoria);
+        return categoriaRepository.save(newCategoria);
+    }
 
-        return categoriaRepository.save(categoria);
+    private void updateDados(Categoria newCategoria, Categoria categoria) {
+        newCategoria.setCategoriaId(categoria.getCategoriaId());
+        newCategoria.setNomeCategoria(categoria.getNomeCategoria());
+        newCategoria.setDescricaoCategoria(categoria.getDescricaoCategoria());
     }
 //********************************************************************************************************************
 
-    public boolean delete(Integer id) {
+    public void delete(Integer id) {
         if (id != null) {
             categoriaRepository.deleteById(id);
-            return true;
-        } else {
-            return false;
         }
     }
 
@@ -108,9 +120,9 @@ import java.util.List;
         return categoriaVO;
     }
 
-    private Categoria converteVOParaEntidade (CategoriaVO categoriaVO) {
+    private Categoria converteVOParaEntidade(CategoriaVO categoriaVO) {
         Categoria categoria = new Categoria();
-        
+
         categoria.setCategoriaId(categoriaVO.getCategoriaId());
         categoria.setNomeCategoria(categoriaVO.getNomeCategoria());
         categoria.setDescricaoCategoria(categoriaVO.getDescricaoCategoria());
@@ -132,7 +144,5 @@ import java.util.List;
         return categoria;
     }
 
-    public long count() {
-        return categoriaRepository.count();
-    }
+
 }

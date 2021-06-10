@@ -42,19 +42,19 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity<ClienteVO> save(@RequestBody ClienteVO clienteVO){
+    public ResponseEntity<ClienteVO> save(@RequestBody ClienteVO clienteVO) {
         HttpHeaders headers = new HttpHeaders();
 
         ClienteVO newClienteVO = clienteService.save(clienteVO);
 
-        if(null != newClienteVO)
+        if (null != newClienteVO)
             return new ResponseEntity<>(newClienteVO, headers, HttpStatus.OK);
         else
             return new ResponseEntity<>(newClienteVO, headers, HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping("/{id}")
-    public ClienteVO update(@PathVariable Integer id, @RequestBody ClienteVO clienteVO){
+    public ClienteVO update(@PathVariable Integer id, @RequestBody ClienteVO clienteVO) {
         return clienteService.update(clienteVO, id);
     }
 

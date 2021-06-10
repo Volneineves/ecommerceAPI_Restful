@@ -28,7 +28,7 @@ public class Cliente {
         this.clienteId = clienteId;
     }
 
-    
+
     @Column(name = "email")
     public String getEmail() {
         return email;
@@ -38,7 +38,7 @@ public class Cliente {
         this.email = email;
     }
 
-    
+
     @Column(name = "username")
     public String getUsername() {
         return username;
@@ -48,7 +48,7 @@ public class Cliente {
         this.username = username;
     }
 
-    
+
     @Column(name = "senha")
     public String getSenha() {
         return senha;
@@ -58,7 +58,7 @@ public class Cliente {
         this.senha = senha;
     }
 
-    
+
     @Column(name = "nome")
     public String getNome() {
         return nome;
@@ -68,7 +68,7 @@ public class Cliente {
         this.nome = nome;
     }
 
-    
+
     @Column(name = "cpf")
     public String getCpf() {
         return cpf;
@@ -78,7 +78,7 @@ public class Cliente {
         this.cpf = cpf;
     }
 
-    
+
     @Column(name = "telefone")
     public String getTelefone() {
         return telefone;
@@ -88,7 +88,7 @@ public class Cliente {
         this.telefone = telefone;
     }
 
-    
+
     @Column(name = "data_nascimento")
     public Calendar getDataNascimento() {
         return dataNascimento;

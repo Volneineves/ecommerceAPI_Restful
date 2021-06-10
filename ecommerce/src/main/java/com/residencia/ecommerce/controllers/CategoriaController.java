@@ -1,5 +1,6 @@
 package com.residencia.ecommerce.controllers;
 
+import com.residencia.ecommerce.entities.Categoria;
 import com.residencia.ecommerce.services.CategoriaService;
 import com.residencia.ecommerce.vo.CategoriaVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,4 +52,19 @@ public class CategoriaController {
             return new ResponseEntity<>(null, headers, HttpStatus.BAD_REQUEST);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Categoria> update(@PathVariable Integer id, @RequestBody Categoria categoria) {
+        HttpHeaders headers = new HttpHeaders();
+        return new ResponseEntity<>(categoriaService.update(id, categoria), headers, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Categoria> delete(@PathVariable Integer id) {
+        try {
+            categoriaService.delete(id);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().build();
+    }
 }

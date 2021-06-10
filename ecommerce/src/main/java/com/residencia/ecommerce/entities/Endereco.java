@@ -26,7 +26,7 @@ public class Endereco {
         this.enderecoId = enderecoId;
     }
 
-    
+
     @Column(name = "cep")
     public String getCep() {
         return cep;
@@ -36,7 +36,7 @@ public class Endereco {
         this.cep = cep;
     }
 
-    
+
     @Column(name = "rua")
     public String getRua() {
         return rua;
@@ -46,7 +46,7 @@ public class Endereco {
         this.rua = rua;
     }
 
-    
+
     @Column(name = "bairro")
     public String getBairro() {
         return bairro;
@@ -56,7 +56,7 @@ public class Endereco {
         this.bairro = bairro;
     }
 
-    
+
     @Column(name = "cidade")
     public String getCidade() {
         return cidade;
@@ -66,7 +66,7 @@ public class Endereco {
         this.cidade = cidade;
     }
 
-    
+
     @Column(name = "numero")
     public String getNumero() {
         return numero;
@@ -76,7 +76,7 @@ public class Endereco {
         this.numero = numero;
     }
 
-    
+
     @Column(name = "complemento")
     public String getComplemento() {
         return complemento;
@@ -86,7 +86,7 @@ public class Endereco {
         this.complemento = complemento;
     }
 
-    
+
     @Column(name = "uf")
     public String getUf() {
         return uf;

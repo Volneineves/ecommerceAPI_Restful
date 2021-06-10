@@ -27,7 +27,7 @@ public class Pedido {
         this.pedidoId = pedidoId;
     }
 
-    
+
     @Column(name = "numero_pedido")
     public Integer getNumeroPedido() {
         return numeroPedido;
@@ -37,7 +37,7 @@ public class Pedido {
         this.numeroPedido = numeroPedido;
     }
 
-    
+
     @Column(name = "lista_produtos_do_pedido")
     public String getListaProdutosDoPedido() {
         return listaProdutosDoPedido;
@@ -47,7 +47,7 @@ public class Pedido {
         this.listaProdutosDoPedido = listaProdutosDoPedido;
     }
 
-    
+
     @Column(name = "valor_total_pedido")
     public BigDecimal getValorTotalPedido() {
         return valorTotalPedido;
@@ -57,7 +57,7 @@ public class Pedido {
         this.valorTotalPedido = valorTotalPedido;
     }
 
-    
+
     @Column(name = "data_pedido")
     public Date getDataPedido() {
         return dataPedido;

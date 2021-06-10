@@ -15,13 +15,12 @@ public class EnderecoService {
     public EnderecoRepository enderecoRepository;
 //******************************************************************************************************************
 
-    public Endereco findById (Integer id){
-        Endereco endereco = enderecoRepository.findById(id).get();
-        return endereco;
+    public Endereco findById(Integer id) {
+        return enderecoRepository.findById(id).get();
     }
 //******************************************************************************************************************
 
-    public List<Endereco> findAll(Integer id){
+    public List<Endereco> findAll(Integer id) {
         return enderecoRepository.findAll();
     }
 
@@ -34,23 +33,24 @@ public class EnderecoService {
 
 //******************************************************************************************************************
 
-    public Endereco save (Endereco endereco){
+    public Endereco save(Endereco endereco) {
         Endereco novoEndereco = enderecoRepository.save(endereco);
-        if(novoEndereco.getEnderecoId()!=null){
+        if (novoEndereco.getEnderecoId() != null) {
             return novoEndereco;
+        } else {
+            return null;
         }
-        else{ return null; }
 
     }
 //********************************************************************************************************************
 
-    public Endereco update(Endereco endereco ){
+    public Endereco update(Endereco endereco) {
 
         return enderecoRepository.save(endereco);
     }
 
 
-                 //   OBS      analisar necessidade.
+    //   OBS      analisar necessidade.
 
 //     public Endereco update(Integer id,Endereco novoEndereco){
 //        Endereco antigoEndereco = enderecoRepository.findById(id).get();
@@ -69,9 +69,6 @@ public class EnderecoService {
 //  }
 
 
-
-
-
 //********************************************************************************************************************
 
     public boolean delete(Integer id) {
@@ -82,7 +79,6 @@ public class EnderecoService {
             return false;
         }
     }
-
 
 
 }

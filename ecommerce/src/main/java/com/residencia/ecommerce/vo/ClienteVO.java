@@ -1,7 +1,5 @@
 package com.residencia.ecommerce.vo;
 
-import com.residencia.ecommerce.entities.Pedido;
-
 import java.util.Calendar;
 import java.util.List;
 

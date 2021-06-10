@@ -9,6 +9,7 @@ public class ProdutoVO {
     private BigDecimal precoProduto;
     private Integer qtdEstoque;
     private String imagem;
+    private Integer categoria;
 
     public Integer getProdutoId() {
         return produtoId;
@@ -56,5 +57,13 @@ public class ProdutoVO {
 
     public void setImagem(String imagem) {
         this.imagem = imagem;
+    }
+
+    public Integer getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Integer categoria) {
+        this.categoria = categoria;
     }
 }
