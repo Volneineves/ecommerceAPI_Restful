@@ -14,7 +14,7 @@ public class ClienteVO {
     private String cpf;
     private String telefone;
     private Calendar dataNascimento;
-    private List<Pedido> pedidosByClienteId;
+    private List<PedidoVO> pedidosByClienteId;
 
     public Integer getClienteId() {
         return clienteId;
@@ -80,11 +80,11 @@ public class ClienteVO {
         this.dataNascimento = dataNascimento;
     }
 
-    public List<Pedido> getPedidosByClienteId() {
+    public List<PedidoVO> getPedidosByClienteId() {
         return pedidosByClienteId;
     }
 
-    public void setPedidosByClienteId(List<Pedido> pedidosByClienteId) {
+    public void setPedidosByClienteId(List<PedidoVO> pedidosByClienteId) {
         this.pedidosByClienteId = pedidosByClienteId;
     }
 }

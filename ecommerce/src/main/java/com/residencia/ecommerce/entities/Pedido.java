@@ -1,20 +1,22 @@
 package com.residencia.ecommerce.entities;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 public class Pedido {
     private Integer pedidoId;
     private Integer numeroPedido;
     private String listaProdutosDoPedido;
-    private Object valorTotalPedido;
+    private BigDecimal valorTotalPedido;
     private Date dataPedido;
     private Boolean status;
     private Integer clienteId;
     private Cliente clienteByClienteId;
-    private Collection<ProdutoPedido> produtoPedidosByPedidoId;
+    private List<ProdutoPedido> produtoPedidosByPedidoId;
 
     @Id
     @Column(name = "pedido_id")
@@ -48,11 +50,11 @@ public class Pedido {
 
     
     @Column(name = "valor_total_pedido")
-    public Object getValorTotalPedido() {
+    public BigDecimal getValorTotalPedido() {
         return valorTotalPedido;
     }
 
-    public void setValorTotalPedido(Object valorTotalPedido) {
+    public void setValorTotalPedido(BigDecimal valorTotalPedido) {
         this.valorTotalPedido = valorTotalPedido;
     }
 
@@ -97,11 +99,11 @@ public class Pedido {
     }
 
     @OneToMany(mappedBy = "pedidoByPedidoId")
-    public Collection<ProdutoPedido> getProdutoPedidosByPedidoId() {
+    public List<ProdutoPedido> getProdutoPedidosByPedidoId() {
         return produtoPedidosByPedidoId;
     }
 
-    public void setProdutoPedidosByPedidoId(Collection<ProdutoPedido> produtoPedidosByPedidoId) {
+    public void setProdutoPedidosByPedidoId(List<ProdutoPedido> produtoPedidosByPedidoId) {
         this.produtoPedidosByPedidoId = produtoPedidosByPedidoId;
     }
 }
