@@ -49,6 +49,22 @@ public class PedidoService {
         return listPedidoVO;
     }
 
+    public Pedido updateLogado(Integer id, Pedido pedido) {
+        Pedido newPedido = pedidoRepository.findById(id).get();
+        updateDados(newPedido, pedido);
+        return pedidoRepository.save(newPedido);
+    }
+
+    private void updateDados(Pedido newPedido, Pedido pedido) {
+
+        newPedido.setPedidoId(pedido.getPedidoId());
+        newPedido.setNumeroPedido(pedido.getNumeroPedido());
+        newPedido.setValorTotalPedido(pedido.getValorTotalPedido());
+        newPedido.setStatus(pedido.getStatus());
+        newPedido.setDataPedido(pedido.getDataPedido());
+        newPedido.setClienteByClienteId(pedido.getClienteByClienteId());
+    }
+
     public void delete(Integer id) {
         if (id != null)
             pedidoRepository.deleteById(id);
