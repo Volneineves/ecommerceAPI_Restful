@@ -3,13 +3,9 @@ package com.residencia.ecommerce.services;
 
 import com.residencia.ecommerce.entities.Endereco;
 import com.residencia.ecommerce.repositories.EnderecoRepository;
-import com.residencia.ecommerce.vo.EnderecoVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,33 +20,8 @@ public class EnderecoService {
     }
 //******************************************************************************************************************
 
-    public List<EnderecoVO> findAllVO(Integer pagina, Integer qtdRegistros) throws Exception {
-        Pageable page = null;
-        List<Endereco> listEndereco = null;
-        List<Endereco> listEnderecoComPaginacao = null;
-        List<EnderecoVO> listEnderecoVO = new ArrayList<>();
-
-        try {
-            if (null != pagina && null != qtdRegistros) {
-
-                page = PageRequest.of(pagina, qtdRegistros);
-                listEnderecoComPaginacao = enderecoRepository.findAll(page).getContent();
-
-                for (Endereco lEndereco : listEnderecoComPaginacao) {
-                    listEnderecoVO.add(converteEntidadeParaVO(lEndereco));
-                }
-
-            } else {
-                listEndereco = enderecoRepository.findAll();
-
-                for (Endereco lEndereco : listEndereco) {
-                    listEnderecoVO.add(converteEntidadeParaVO(lEndereco));
-                }
-            }
-        } catch (Exception e) {
-            throw new Exception("Não foi possível recuperar a lista de endereços ::" + e.getMessage());
-        }
-        return listEnderecoVO;
+    public List<Endereco> findAll(Integer id) {
+        return enderecoRepository.findAll();
     }
 
 //******************************************************************************************************************
@@ -73,10 +44,10 @@ public class EnderecoService {
     }
 //********************************************************************************************************************
 
-//    public Endereco update(Endereco endereco) {
-//
-//        return enderecoRepository.save(endereco);
-//    }
+    public Endereco update(Endereco endereco) {
+
+        return enderecoRepository.save(endereco);
+    }
 
 
     //   OBS      analisar necessidade.
@@ -109,39 +80,5 @@ public class EnderecoService {
         }
     }
 
-//************************* Operações que o cliente ppoderá fazer após logado *****************************************
 
-    public Endereco updateLogado(Integer id, Endereco endereco) {
-        Endereco newEndereco = enderecoRepository.findById(id).get();
-        updateDados(newEndereco, endereco);
-        return enderecoRepository.save(newEndereco);
-    }
-
-    private void updateDados(Endereco newEndereco, Endereco endereco) {
-
-        newEndereco.setBairro(endereco.getBairro());
-        newEndereco.setCep(endereco.getCep());
-        newEndereco.setRua(endereco.getRua());
-        newEndereco.setCidade(endereco.getCidade());
-        newEndereco.setNumero(endereco.getNumero());
-        newEndereco.setComplemento(endereco.getComplemento());
-        newEndereco.setUf(endereco.getUf());
-    }
-
-//*************************(fim) Operações que o cliente ppoderá fazer após logado (fim)*****************************************
-
-    private EnderecoVO converteEntidadeParaVO(Endereco endereco) {
-        EnderecoVO enderecoVO = new EnderecoVO();
-
-        enderecoVO.setEnderecoId(endereco.getEnderecoId());
-        enderecoVO.setCep(endereco.getCep());
-        enderecoVO.setRua(endereco.getRua());
-        enderecoVO.setBairro(endereco.getBairro());
-        enderecoVO.setCidade(endereco.getCidade());
-        enderecoVO.setNumero(endereco.getNumero());
-        enderecoVO.setComplemento(endereco.getComplemento());
-        enderecoVO.setUf(endereco.getUf());
-
-        return enderecoVO;
-    }
 }
