@@ -3,6 +3,7 @@ package com.residencia.ecommerce.controllers;
 import com.residencia.ecommerce.entities.Cliente;
 import com.residencia.ecommerce.services.ClienteService;
 import com.residencia.ecommerce.vo.ClienteVO;
+import com.residencia.ecommerce.vo.EnderecoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -44,10 +45,10 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity<ClienteVO> save(@RequestBody ClienteVO clienteVO) {
+    public ResponseEntity<ClienteVO> save(@RequestBody ClienteVO clienteVO, @RequestBody EnderecoVO enderecoVO) {
         HttpHeaders headers = new HttpHeaders();
 
-        ClienteVO newClienteVO = clienteService.save(clienteVO);
+        ClienteVO newClienteVO = clienteService.save(clienteVO, enderecoVO);
 
         if (null != newClienteVO)
             return new ResponseEntity<>(newClienteVO, headers, HttpStatus.OK);
@@ -56,8 +57,8 @@ public class ClienteController {
     }
 
     @PutMapping("/{id}")
-    public ClienteVO update(@PathVariable Integer id, @RequestBody ClienteVO clienteVO) {
-        return clienteService.update(clienteVO, id);
+    public Cliente update(@PathVariable Integer id, @RequestBody Cliente cliente) {
+        return clienteService.updateLogado(id, cliente);
     }
 
     @DeleteMapping("/{id}")

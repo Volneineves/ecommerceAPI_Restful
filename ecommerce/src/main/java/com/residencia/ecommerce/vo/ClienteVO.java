@@ -1,5 +1,7 @@
 package com.residencia.ecommerce.vo;
 
+import com.residencia.ecommerce.entities.Endereco;
+
 import java.util.Calendar;
 import java.util.List;
 
@@ -12,6 +14,7 @@ public class ClienteVO {
     private String cpf;
     private String telefone;
     private Calendar dataNascimento;
+    private EnderecoVO enderecoByEnderecoId;
     private List<PedidoVO> pedidosByClienteId;
 
     public Integer getClienteId() {
@@ -84,5 +87,13 @@ public class ClienteVO {
 
     public void setPedidosByClienteId(List<PedidoVO> pedidosByClienteId) {
         this.pedidosByClienteId = pedidosByClienteId;
+    }
+
+    public EnderecoVO getEnderecoByEnderecoId() {
+        return enderecoByEnderecoId;
+    }
+
+    public void setEnderecoByEnderecoId(EnderecoVO enderecoByEnderecoId) {
+        this.enderecoByEnderecoId = enderecoByEnderecoId;
     }
 }

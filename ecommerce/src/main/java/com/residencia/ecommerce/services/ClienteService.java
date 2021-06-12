@@ -3,8 +3,10 @@ package com.residencia.ecommerce.services;
 import com.residencia.ecommerce.entities.Cliente;
 import com.residencia.ecommerce.entities.Pedido;
 import com.residencia.ecommerce.repositories.ClienteRepository;
+import com.residencia.ecommerce.repositories.EnderecoRepository;
 import com.residencia.ecommerce.repositories.PedidoRepository;
 import com.residencia.ecommerce.vo.ClienteVO;
+import com.residencia.ecommerce.vo.EnderecoVO;
 import com.residencia.ecommerce.vo.PedidoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -26,6 +28,9 @@ public class ClienteService {
 
     @Autowired
     public PedidoRepository pedidoRepository;
+
+    @Autowired
+    public EnderecoRepository enderecoRepository;
 //******************************************************************************************************************
 
     public ClienteVO findById(Integer id) {
@@ -72,21 +77,38 @@ public class ClienteService {
 
 //******************************************************************************************************************
 
-    public ClienteVO save(ClienteVO clienteVO) {
-        Cliente newCliente = converteVOParaEntidade(clienteVO, null);
+    public ClienteVO save(ClienteVO clienteVO, EnderecoVO enderecoVO) {
+        Cliente newCliente = converteVOParaEntidade(clienteVO, enderecoVO);
         clienteRepository.save(newCliente);
         return converteEntidadeParaVO(newCliente);
     }
 
 //******************************************************************************************************************
 
-    public ClienteVO update(ClienteVO clienteVO, Integer id) {
-        Cliente cliente = converteVOParaEntidade(clienteVO, id);
-        Cliente newCliente = clienteRepository.save(cliente);
-        return converteEntidadeParaVO(newCliente);
-    }
+//    public ClienteVO update(Integer,  idClienteVO clienteVO) {
+//        Cliente cliente = converteVOParaEntidade(clienteVO, id);
+//        Cliente newCliente = clienteRepository.save(cliente);
+//        return converteEntidadeParaVO(newCliente);
+//    }
 
 //********************************************************************************************************************
+
+
+//************************* Operações que o cliente ppoderá fazer após logado *****************************************
+    public Cliente updateLogado(Integer id, Cliente cliente) {
+        Cliente newCliente = clienteRepository.findById(id).get();
+        updateDados(newCliente, cliente);
+        return clienteRepository.save(newCliente);
+    }
+
+    private void updateDados(Cliente newCliente, Cliente cliente) {
+
+        newCliente.setTelefone(cliente.getTelefone());
+        newCliente.setEmail(cliente.getEmail());
+        newCliente.setUsername(cliente.getUsername());
+        newCliente.setSenha(cliente.getSenha());
+        newCliente.setNome(cliente.getNome());
+    }
 
     public boolean delete(Integer id) {
         if (id != null) {
@@ -97,9 +119,12 @@ public class ClienteService {
         }
     }
 
+//*************************(fim) Operações que o cliente ppoderá fazer após logado (fim)*****************************************
+
 //******************************************************************************************************************
 
     private ClienteVO converteEntidadeParaVO(Cliente cliente) {
+//      Endereco endereco = enderecoRepository.findById(cliente.getEnderecoByEnderecoId().getEnderecoId()).get();
         ClienteVO clienteVO = new ClienteVO();
         List<PedidoVO> listPedidoVO = new ArrayList<>();
 
@@ -130,11 +155,11 @@ public class ClienteService {
 
 //******************************************************************************************************************
 
-    private Cliente converteVOParaEntidade(ClienteVO clienteVO, Integer id) {
+    private Cliente converteVOParaEntidade(ClienteVO clienteVO, EnderecoVO enderecoVO) {
         Cliente cliente = new Cliente();
         List<Pedido> listPedido = new ArrayList<>();
 
-        cliente.setClienteId((null == id) ? clienteVO.getClienteId() : id);
+        cliente.setClienteId(clienteVO.getClienteId());
         cliente.setEmail(clienteVO.getEmail());
         cliente.setUsername(clienteVO.getUsername());
         cliente.setSenha(clienteVO.getSenha());
