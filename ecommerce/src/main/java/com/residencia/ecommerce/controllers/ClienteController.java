@@ -2,13 +2,12 @@ package com.residencia.ecommerce.controllers;
 
 import com.residencia.ecommerce.entities.Cliente;
 import com.residencia.ecommerce.services.ClienteService;
+import com.residencia.ecommerce.vo.CadastroClienteVO;
 import com.residencia.ecommerce.vo.ClienteVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,10 +43,10 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity<ClienteVO> save(@RequestBody ClienteVO clienteVO) {
+    public ResponseEntity<Cliente> save(@RequestBody CadastroClienteVO cadastroClienteVO) {
         HttpHeaders headers = new HttpHeaders();
 
-        ClienteVO newClienteVO = clienteService.save(clienteVO);
+        Cliente newClienteVO = clienteService.save(cadastroClienteVO);
 
         if (null != newClienteVO)
             return new ResponseEntity<>(newClienteVO, headers, HttpStatus.OK);

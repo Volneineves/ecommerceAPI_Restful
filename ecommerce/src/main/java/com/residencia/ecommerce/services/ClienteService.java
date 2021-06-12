@@ -1,22 +1,24 @@
 package com.residencia.ecommerce.services;
 
 import com.residencia.ecommerce.entities.Cliente;
+import com.residencia.ecommerce.entities.Endereco;
 import com.residencia.ecommerce.entities.Pedido;
 import com.residencia.ecommerce.repositories.ClienteRepository;
+import com.residencia.ecommerce.repositories.EnderecoRepository;
 import com.residencia.ecommerce.repositories.PedidoRepository;
+import com.residencia.ecommerce.vo.CadastroClienteVO;
 import com.residencia.ecommerce.vo.ClienteVO;
 import com.residencia.ecommerce.vo.PedidoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ClienteService {
@@ -26,6 +28,10 @@ public class ClienteService {
 
     @Autowired
     public PedidoRepository pedidoRepository;
+
+    @Autowired
+    public EnderecoRepository enderecoRepository;
+
 //******************************************************************************************************************
 
     public ClienteVO findById(Integer id) {
@@ -72,11 +78,11 @@ public class ClienteService {
 
 //******************************************************************************************************************
 
-    public ClienteVO save(ClienteVO clienteVO) {
-        Cliente newCliente = converteVOParaEntidade(clienteVO, null);
-        clienteRepository.save(newCliente);
-        return converteEntidadeParaVO(newCliente);
-    }
+//    public ClienteVO save(ClienteVO clienteVO) {
+//        Cliente newCliente = converteVOParaEntidade(clienteVO, null);
+//        clienteRepository.save(newCliente);
+//        return converteEntidadeParaVO(newCliente);
+//    }
 
 //******************************************************************************************************************
 
@@ -158,4 +164,48 @@ public class ClienteService {
 
         return cliente;
     }
+
+    public Cliente save(CadastroClienteVO cadastroClienteVO) {
+        Cliente cliente = new Cliente();
+
+        cliente.setEmail(cadastroClienteVO.getEmail());
+        cliente.setUsername(cadastroClienteVO.getUsername());
+        cliente.setSenha(cadastroClienteVO.getSenha());
+        cliente.setNome(cadastroClienteVO.getNome());
+        cliente.setCpf(cadastroClienteVO.getCpf());
+        cliente.setTelefone(cadastroClienteVO.getTelefone());
+//        cliente.setDataNascimento(cadastroClienteVO.getDataNascimento());
+
+        RestTemplate restTemplate = new RestTemplate();
+        String uri = "http://viacep.com.br/ws/{cep}/json/";
+        Map<String, String> params = new HashMap<>();
+        params.put("cep", cadastroClienteVO.getCep());
+        cadastroClienteVO = restTemplate.getForObject(uri, CadastroClienteVO.class, params);
+
+        Endereco endereco = new Endereco();
+        assert cadastroClienteVO != null;
+        endereco.setBairro(cadastroClienteVO.getBairro());
+        endereco.setCep(cadastroClienteVO.getCep());
+        endereco.setCidade(cadastroClienteVO.getCidade());
+        endereco.setNumero(cadastroClienteVO.getNumero());
+        endereco.setRua(cadastroClienteVO.getRua());
+        endereco.setComplemento(cadastroClienteVO.getComplemento());
+        endereco.setUf(cadastroClienteVO.getUf());
+
+
+        enderecoRepository.save(endereco);
+        cliente.setEnderecoByEnderecoId(endereco);
+        clienteRepository.save(cliente);
+
+
+        return cliente;
+    }
+
+//
+//        @PostMapping(value="/getCep/{cep}")
+//        public ResponseEntity<CadastroClienteVO> doObterCep(@PathVariable(name = "cep") String cep) {
+//
+//
+//            return new ResponseEntity<CadastroClienteVO>(cadastroClienteVO, HttpStatus.OK);
+//        }
 }
