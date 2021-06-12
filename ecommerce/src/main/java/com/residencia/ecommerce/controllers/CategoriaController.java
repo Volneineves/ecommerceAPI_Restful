@@ -40,7 +40,7 @@ public class CategoriaController {
         return categoriaService.count();
     }
 
-    @PostMapping
+    @PostMapping("/criar-categoria")
     public ResponseEntity<CategoriaVO> save(@RequestBody CategoriaVO categoriaVO) {
         HttpHeaders headers = new HttpHeaders();
 

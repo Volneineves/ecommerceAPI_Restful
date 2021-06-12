@@ -9,7 +9,6 @@ import java.util.List;
 public class Pedido {
     private Integer pedidoId;
     private Integer numeroPedido;
-    private String listaProdutosDoPedido;
     private BigDecimal valorTotalPedido;
     private Date dataPedido;
     private Boolean status;
@@ -36,17 +35,6 @@ public class Pedido {
     public void setNumeroPedido(Integer numeroPedido) {
         this.numeroPedido = numeroPedido;
     }
-
-
-    @Column(name = "lista_produtos_do_pedido")
-    public String getListaProdutosDoPedido() {
-        return listaProdutosDoPedido;
-    }
-
-    public void setListaProdutosDoPedido(String listaProdutosDoPedido) {
-        this.listaProdutosDoPedido = listaProdutosDoPedido;
-    }
-
 
     @Column(name = "valor_total_pedido")
     public BigDecimal getValorTotalPedido() {

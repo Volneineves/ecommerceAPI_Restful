@@ -75,3 +75,9 @@ pedido (pedido_id);
 
 alter table produto add categoria_id INT not null references 
 categoria (categoria_id);
+
+--Alterações 
+alter table produto drop column imagem;
+alter table produto add imagem VARCHAR;
+
+alter table pedido drop column lista_produtos_do_pedido;

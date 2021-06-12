@@ -11,7 +11,11 @@ import com.residencia.ecommerce.vo.PedidoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -138,7 +142,6 @@ public class ClienteService {
 
             pedidoVO.setPedidoId(lPedido.getPedidoId());
             pedidoVO.setNumeroPedido(lPedido.getNumeroPedido());
-            pedidoVO.setListaProdutosDoPedido(lPedido.getListaProdutosDoPedido());
             pedidoVO.setValorTotalPedido(lPedido.getValorTotalPedido());
             pedidoVO.setDataPedido(lPedido.getDataPedido());
             pedidoVO.setStatus(lPedido.getStatus());
@@ -170,7 +173,6 @@ public class ClienteService {
 
             pedido.setPedidoId(lPedidoVO.getPedidoId());
             pedido.setNumeroPedido(lPedidoVO.getNumeroPedido());
-            pedido.setListaProdutosDoPedido(lPedidoVO.getListaProdutosDoPedido());
             pedido.setValorTotalPedido(lPedidoVO.getValorTotalPedido());
             pedido.setDataPedido(lPedidoVO.getDataPedido());
             pedido.setStatus(lPedidoVO.getStatus());
@@ -181,5 +183,4 @@ public class ClienteService {
 
         return cliente;
     }
-
 }
