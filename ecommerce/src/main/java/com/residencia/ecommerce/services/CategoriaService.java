@@ -67,9 +67,9 @@ public class CategoriaService {
 
     public CategoriaVO saveVO(CategoriaVO categoriaVO) {
         Categoria novaCategoria = converteVOParaEntidade(categoriaVO);
-        Categoria categoria = categoriaRepository.save(novaCategoria);
+        categoriaRepository.save(novaCategoria);
 
-        return converteEntidadeParaVO(categoria);
+        return converteEntidadeParaVO(novaCategoria);
     }
 
 //********************************************************************************************************************
@@ -92,7 +92,6 @@ public class CategoriaService {
             categoriaRepository.deleteById(id);
         }
     }
-
 
     private CategoriaVO converteEntidadeParaVO(Categoria categoria) {
         CategoriaVO categoriaVO = new CategoriaVO();
@@ -139,8 +138,8 @@ public class CategoriaService {
             produto.setImagem(lProdutoVO.getImagem());
 
             listProduto.add(produto);
-            categoria.setProdutosByCategoriaId(listProduto);
         }
+            categoria.setProdutosByCategoriaId(listProduto);
         return categoria;
     }
 

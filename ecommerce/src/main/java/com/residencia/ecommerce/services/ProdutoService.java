@@ -15,14 +15,6 @@ import java.util.List;
 @Service
 public class ProdutoService {
 
-    /*- Visualizar todos os produtos ou um específico pelo nome.
-    - Criar um novo produto (Com imagem).
-    - Editar um produto.
-    - Deletar um produto.
-    - Visualizar todos os pedidos.
-    - Excluir algum pedido.
-    */
-
     @Autowired
     public ProdutoRepository produtoRepository;
 
@@ -85,21 +77,27 @@ public class ProdutoService {
 
 //********************************************************************************************************************
 
-    public Produto update(Produto produto) {
+    public Produto update(Integer id, Produto produto) {
+    Produto newProduto = produtoRepository.findById(id).get();
+    updateDados(newProduto, produto);
+    return produtoRepository.save(newProduto);
+}
 
-        return produtoRepository.save(produto);
+    private void updateDados(Produto newProduto, Produto produto) {
+        newProduto.setProdutoId(produto.getProdutoId());
+        newProduto.setNomeProduto(produto.getNomeProduto());
+        newProduto.setDescricaoProduto(produto.getDescricaoProduto());
+        newProduto.setPrecoProduto(produto.getPrecoProduto());
+        newProduto.setQtdEstoque(produto.getQtdEstoque());
+        newProduto.setImagem(produto.getImagem());
+        newProduto.setCategoria(categoriaRepository.getById(produto.getCategoria().getCategoriaId()));
     }
-
 
 //********************************************************************************************************************
 
-    public boolean delete(Integer id) {
-        if (id != null) {
+    public void delete(Integer id) {
+        if (id != null)
             produtoRepository.deleteById(id);
-            return true;
-        } else {
-            return false;
-        }
     }
 
     private ProdutoVO converteEntidadeParaVO(Produto produto) {
@@ -128,6 +126,4 @@ public class ProdutoService {
 
         return produto;
     }
-
-
 }
