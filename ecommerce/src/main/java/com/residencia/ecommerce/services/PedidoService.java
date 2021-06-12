@@ -32,17 +32,6 @@ public class PedidoService {
         return pedidoRepository.count();
     }
 
-//******************************************************************************************************************
-
-    public Pedido save(Pedido pedido) {
-        Pedido novoPedido = pedidoRepository.save(pedido);
-        if (novoPedido.getPedidoId() != null) {
-            return novoPedido;
-        } else {
-            return null;
-        }
-
-    }
 //********************************************************************************************************************
 
     public Pedido update(Pedido pedido) {
@@ -62,5 +51,18 @@ public class PedidoService {
         }
     }
 
+//************************* Operações que o cliente ppoderá fazer após logado *****************************************
+
+    public Pedido save(Pedido pedido) {
+        Pedido novoPedido = pedidoRepository.save(pedido);
+        if (novoPedido.getPedidoId() != null) {
+            return novoPedido;
+        } else {
+            return null;
+        }
+
+    }
+
+//*************************(fim) Operações que o cliente ppoderá fazer após logado (fim)*****************************************
 
 }
