@@ -3,64 +3,66 @@ package com.residencia.ecommerce.services;
 
 import com.residencia.ecommerce.entities.Pedido;
 import com.residencia.ecommerce.repositories.PedidoRepository;
+import com.residencia.ecommerce.vo.PedidoVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class PedidoService {
 
-
     @Autowired
     public PedidoRepository pedidoRepository;
-//******************************************************************************************************************
-
-    public Pedido findById(Integer id) {
-        return pedidoRepository.findById(id).get();
-    }
-//******************************************************************************************************************
-
-    public List<Pedido> findAll(Integer id) {
-        return pedidoRepository.findAll();
-    }
 
 //******************************************************************************************************************
 
+    public List<PedidoVO> findAllVO(Integer pagina, Integer qtdRegistros) throws Exception {
+        Pageable page = null;
+        List<Pedido> listPedido = null;
+        List<Pedido> listPedidoComPaginacao = null;
+        List<PedidoVO> listPedidoVO = new ArrayList<>();
 
-    public long count() {
-        return pedidoRepository.count();
-    }
+        try {
+            if (null != pagina && null != qtdRegistros) {
 
-//******************************************************************************************************************
+                page = PageRequest.of(pagina, qtdRegistros);
+                listPedidoComPaginacao = pedidoRepository.findAll(page).getContent();
 
-    public Pedido save(Pedido pedido) {
-        Pedido novoPedido = pedidoRepository.save(pedido);
-        if (novoPedido.getPedidoId() != null) {
-            return novoPedido;
-        } else {
-            return null;
+                for (Pedido lPedido : listPedidoComPaginacao) {
+                    listPedidoVO.add(converteEntidadeParaVO(lPedido));
+                }
+
+            } else {
+                listPedido = pedidoRepository.findAll();
+
+                for (Pedido lPedido : listPedido) {
+                    listPedidoVO.add(converteEntidadeParaVO(lPedido));
+                }
+            }
+        } catch (Exception e) {
+            throw new Exception("Não foi possível recuperar a lista de pedidos ::" + e.getMessage());
         }
-
-    }
-//********************************************************************************************************************
-
-    public Pedido update(Pedido pedido) {
-
-        return pedidoRepository.save(pedido);
+        return listPedidoVO;
     }
 
-
-//********************************************************************************************************************
-
-    public boolean delete(Integer id) {
-        if (id != null) {
+    public void delete(Integer id) {
+        if (id != null)
             pedidoRepository.deleteById(id);
-            return true;
-        } else {
-            return false;
-        }
     }
 
+    private PedidoVO converteEntidadeParaVO(Pedido pedido) {
+        PedidoVO pedidoVO = new PedidoVO();
 
+        pedidoVO.setPedidoId(pedido.getPedidoId());
+        pedidoVO.setNumeroPedido(pedido.getNumeroPedido());
+        pedidoVO.setValorTotalPedido(pedido.getValorTotalPedido());
+        pedidoVO.setStatus(pedido.getStatus());
+        pedidoVO.setClienteId(pedido.getClienteByClienteId().getClienteId());
+
+        return pedidoVO;
+    }
 }

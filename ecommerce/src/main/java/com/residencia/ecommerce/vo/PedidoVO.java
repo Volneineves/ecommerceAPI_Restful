@@ -1,7 +1,5 @@
 package com.residencia.ecommerce.vo;
 
-import com.residencia.ecommerce.entities.Cliente;
-
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
@@ -9,12 +7,10 @@ import java.util.List;
 public class PedidoVO {
     private Integer pedidoId;
     private Integer numeroPedido;
-    private String listaProdutosDoPedido;
     private BigDecimal valorTotalPedido;
     private Date dataPedido;
     private Boolean status;
     private Integer clienteId;
-    private Cliente clienteByClienteId;
     private List<ProdutoPedidoVO> produtoPedidosByPedidoId;
 
     public Integer getPedidoId() {
@@ -31,14 +27,6 @@ public class PedidoVO {
 
     public void setNumeroPedido(Integer numeroPedido) {
         this.numeroPedido = numeroPedido;
-    }
-
-    public String getListaProdutosDoPedido() {
-        return listaProdutosDoPedido;
-    }
-
-    public void setListaProdutosDoPedido(String listaProdutosDoPedido) {
-        this.listaProdutosDoPedido = listaProdutosDoPedido;
     }
 
     public BigDecimal getValorTotalPedido() {
@@ -71,14 +59,6 @@ public class PedidoVO {
 
     public void setClienteId(Integer clienteId) {
         this.clienteId = clienteId;
-    }
-
-    public Cliente getClienteByClienteId() {
-        return clienteByClienteId;
-    }
-
-    public void setClienteByClienteId(Cliente clienteByClienteId) {
-        this.clienteByClienteId = clienteByClienteId;
     }
 
     public List<ProdutoPedidoVO> getProdutoPedidosByPedidoId() {
