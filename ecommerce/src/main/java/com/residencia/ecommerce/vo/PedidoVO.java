@@ -1,14 +1,13 @@
 package com.residencia.ecommerce.vo;
 
-import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 public class PedidoVO {
     private Integer pedidoId;
     private Integer numeroPedido;
-    private BigDecimal valorTotalPedido;
-    private Date dataPedido;
+    private Double valorTotalPedido;
+    private Calendar dataPedido;
     private Boolean status;
     private Integer clienteId;
     private List<ProdutoPedidoVO> produtoPedidosByPedidoId;
@@ -29,19 +28,19 @@ public class PedidoVO {
         this.numeroPedido = numeroPedido;
     }
 
-    public BigDecimal getValorTotalPedido() {
+    public Double getValorTotalPedido() {
         return valorTotalPedido;
     }
 
-    public void setValorTotalPedido(BigDecimal valorTotalPedido) {
+    public void setValorTotalPedido(Double valorTotalPedido) {
         this.valorTotalPedido = valorTotalPedido;
     }
 
-    public Date getDataPedido() {
+    public Calendar getDataPedido() {
         return dataPedido;
     }
 
-    public void setDataPedido(Date dataPedido) {
+    public void setDataPedido(Calendar dataPedido) {
         this.dataPedido = dataPedido;
     }
 

@@ -1,6 +1,10 @@
 package com.residencia.ecommerce.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -26,7 +30,8 @@ public class Endereco {
         this.enderecoId = enderecoId;
     }
 
-
+    @NotBlank(message = "Preencha o CEP corretamente.")
+    @Size(min = 9, max = 9, message = "O CEP deve ter 8 dígitos.")
     @Column(name = "cep")
     public String getCep() {
         return cep;
@@ -96,7 +101,7 @@ public class Endereco {
         this.uf = uf;
     }
 
-
+    @JsonBackReference
     @OneToMany(mappedBy = "enderecoByEnderecoId")
     public List<Cliente> getClientesByEnderecoId() {
         return clientesByEnderecoId;

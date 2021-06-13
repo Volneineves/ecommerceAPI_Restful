@@ -78,10 +78,10 @@ public class ProdutoService {
 //********************************************************************************************************************
 
     public Produto update(Integer id, Produto produto) {
-    Produto newProduto = produtoRepository.findById(id).get();
-    updateDados(newProduto, produto);
-    return produtoRepository.save(newProduto);
-}
+        Produto newProduto = produtoRepository.findById(id).get();
+        updateDados(newProduto, produto);
+        return produtoRepository.save(newProduto);
+    }
 
     private void updateDados(Produto newProduto, Produto produto) {
         newProduto.setProdutoId(produto.getProdutoId());
@@ -90,7 +90,7 @@ public class ProdutoService {
         newProduto.setPrecoProduto(produto.getPrecoProduto());
         newProduto.setQtdEstoque(produto.getQtdEstoque());
         newProduto.setImagem(produto.getImagem());
-        newProduto.setCategoria(categoriaRepository.getById(produto.getCategoria().getCategoriaId()));
+        newProduto.setCategoria(categoriaRepository.findById(produto.getCategoria().getCategoriaId()).get());
     }
 
 //********************************************************************************************************************

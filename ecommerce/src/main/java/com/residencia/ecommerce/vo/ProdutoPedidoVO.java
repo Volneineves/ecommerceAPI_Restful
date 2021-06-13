@@ -1,54 +1,31 @@
 package com.residencia.ecommerce.vo;
 
-import com.residencia.ecommerce.entities.Pedido;
-import com.residencia.ecommerce.entities.Produto;
-
-import java.math.BigDecimal;
-
 public class ProdutoPedidoVO {
-    private Integer produtoPedidoId;
-    private Integer qtdProdutoPedido;
-    private BigDecimal precoProdutoPedido;
-    private Produto produtoByProdutoId;
-    private Pedido pedidoByPedidoId;
+    private Integer produtoId;
+    private Integer quantidade;
+    private Double preco;
 
-    public Integer getProdutoPedidoId() {
-        return produtoPedidoId;
+    public Integer getProdutoId() {
+        return produtoId;
     }
 
-    public void setProdutoPedidoId(Integer produtoPedidoId) {
-        this.produtoPedidoId = produtoPedidoId;
+    public void setProdutoId(Integer produtoId) {
+        this.produtoId = produtoId;
     }
 
-    public Integer getQtdProdutoPedido() {
-        return qtdProdutoPedido;
+    public Integer getQuantidade() {
+        return quantidade;
     }
 
-    public void setQtdProdutoPedido(Integer qtdProdutoPedido) {
-        this.qtdProdutoPedido = qtdProdutoPedido;
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
     }
 
-    public BigDecimal getPrecoProdutoPedido() {
-        return precoProdutoPedido;
+    public Double getPreco() {
+        return preco;
     }
 
-    public void setPrecoProdutoPedido(BigDecimal precoProdutoPedido) {
-        this.precoProdutoPedido = precoProdutoPedido;
-    }
-
-    public Produto getProdutoByProdutoId() {
-        return produtoByProdutoId;
-    }
-
-    public void setProdutoByProdutoId(Produto produtoByProdutoId) {
-        this.produtoByProdutoId = produtoByProdutoId;
-    }
-
-    public Pedido getPedidoByPedidoId() {
-        return pedidoByPedidoId;
-    }
-
-    public void setPedidoByPedidoId(Pedido pedidoByPedidoId) {
-        this.pedidoByPedidoId = pedidoByPedidoId;
+    public void setPreco(Double preco) {
+        this.preco = preco;
     }
 }

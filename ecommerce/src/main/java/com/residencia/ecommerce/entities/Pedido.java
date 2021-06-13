@@ -1,16 +1,20 @@
 package com.residencia.ecommerce.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.validator.constraints.Range;
+
 import javax.persistence.*;
-import java.math.BigDecimal;
-import java.sql.Date;
+import javax.validation.constraints.NotNull;
+import java.util.Calendar;
 import java.util.List;
 
 @Entity
 public class Pedido {
     private Integer pedidoId;
     private Integer numeroPedido;
-    private BigDecimal valorTotalPedido;
-    private Date dataPedido;
+    private Double valorTotalPedido;
+    private Calendar dataPedido;
     private Boolean status;
     private Cliente clienteByClienteId;
     private List<ProdutoPedido> produtoPedidosByPedidoId;
@@ -36,22 +40,24 @@ public class Pedido {
         this.numeroPedido = numeroPedido;
     }
 
+    @NotNull(message = "O pedido deve ter um valor.")
+    @Range(min = 1, message = "O valor não pode ser menor que R$ 1,00.")
     @Column(name = "valor_total_pedido")
-    public BigDecimal getValorTotalPedido() {
+    public Double getValorTotalPedido() {
         return valorTotalPedido;
     }
 
-    public void setValorTotalPedido(BigDecimal valorTotalPedido) {
+    public void setValorTotalPedido(Double valorTotalPedido) {
         this.valorTotalPedido = valorTotalPedido;
     }
 
 
     @Column(name = "data_pedido")
-    public Date getDataPedido() {
+    public Calendar getDataPedido() {
         return dataPedido;
     }
 
-    public void setDataPedido(Date dataPedido) {
+    public void setDataPedido(Calendar dataPedido) {
         this.dataPedido = dataPedido;
     }
 
@@ -64,6 +70,7 @@ public class Pedido {
         this.status = status;
     }
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "cliente_id", referencedColumnName = "cliente_id", nullable = false)
     public Cliente getClienteByClienteId() {
@@ -74,6 +81,7 @@ public class Pedido {
         this.clienteByClienteId = clienteByClienteId;
     }
 
+    @JsonBackReference
     @OneToMany(mappedBy = "pedidoByPedidoId")
     public List<ProdutoPedido> getProdutoPedidosByPedidoId() {
         return produtoPedidosByPedidoId;
@@ -81,5 +89,18 @@ public class Pedido {
 
     public void setProdutoPedidosByPedidoId(List<ProdutoPedido> produtoPedidosByPedidoId) {
         this.produtoPedidosByPedidoId = produtoPedidosByPedidoId;
+    }
+
+    @Override
+    public String toString() {
+        return "Pedido{" +
+                "pedidoId=" + pedidoId +
+                ", numeroPedido=" + numeroPedido +
+                ", valorTotalPedido=" + valorTotalPedido +
+                ", dataPedido=" + dataPedido +
+                ", status=" + status +
+                ", clienteByClienteId=" + clienteByClienteId +
+                ", produtoPedidosByPedidoId=" + produtoPedidosByPedidoId +
+                '}';
     }
 }

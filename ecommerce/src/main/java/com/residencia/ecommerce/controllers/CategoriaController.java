@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -41,7 +42,7 @@ public class CategoriaController {
     }
 
     @PostMapping("/criar-categoria")
-    public ResponseEntity<CategoriaVO> save(@RequestBody CategoriaVO categoriaVO) {
+    public ResponseEntity<CategoriaVO> save(@Valid @RequestBody CategoriaVO categoriaVO) {
         HttpHeaders headers = new HttpHeaders();
 
         CategoriaVO novaOrderVO = categoriaService.saveVO(categoriaVO);

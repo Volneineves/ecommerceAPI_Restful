@@ -12,9 +12,9 @@ public class CadastroClienteVO {
     private String telefone;
     private Calendar dataNascimento;
     private String cep;
-    private String rua;
+    private String logradouro;
     private String bairro;
-    private String cidade;
+    private String localidade;
     private String numero;
     private String complemento;
     private String uf;
@@ -83,20 +83,20 @@ public class CadastroClienteVO {
         this.cep = cep;
     }
 
-    public String getRua() {
-        return rua;
+    public String getLogradouro() {
+        return logradouro;
     }
 
-    public void setRua(String rua) {
-        this.rua = rua;
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
     }
 
-    public String getCidade() {
-        return cidade;
+    public String getLocalidade() {
+        return localidade;
     }
 
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
+    public void setLocalidade(String localidade) {
+        this.localidade = localidade;
     }
 
     public String getNumero() {

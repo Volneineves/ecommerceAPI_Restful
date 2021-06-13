@@ -1,14 +1,15 @@
 package com.residencia.ecommerce.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
-import java.math.BigDecimal;
 
 @Entity
 @Table(name = "produto_pedido", schema = "public", catalog = "ecommerce_api_grupo7")
 public class ProdutoPedido {
     private Integer produtoPedidoId;
     private Integer qtdProdutoPedido;
-    private BigDecimal precoProdutoPedido;
+    private Double precoProdutoPedido;
     private Produto produtoByProdutoId;
     private Pedido pedidoByPedidoId;
 
@@ -33,14 +34,15 @@ public class ProdutoPedido {
     }
 
     @Column(name = "preco_produto_pedido")
-    public BigDecimal getPrecoProdutoPedido() {
+    public Double getPrecoProdutoPedido() {
         return precoProdutoPedido;
     }
 
-    public void setPrecoProdutoPedido(BigDecimal precoProdutoPedido) {
+    public void setPrecoProdutoPedido(Double precoProdutoPedido) {
         this.precoProdutoPedido = precoProdutoPedido;
     }
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "produto_id", referencedColumnName = "produto_id", nullable = false)
     public Produto getProdutoByProdutoId() {
@@ -51,6 +53,7 @@ public class ProdutoPedido {
         this.produtoByProdutoId = produtoByProdutoId;
     }
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "pedido_id", referencedColumnName = "pedido_id", nullable = false)
     public Pedido getPedidoByPedidoId() {

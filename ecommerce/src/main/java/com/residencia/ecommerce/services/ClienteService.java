@@ -5,7 +5,6 @@ import com.residencia.ecommerce.entities.Endereco;
 import com.residencia.ecommerce.entities.Pedido;
 import com.residencia.ecommerce.repositories.ClienteRepository;
 import com.residencia.ecommerce.repositories.EnderecoRepository;
-import com.residencia.ecommerce.repositories.PedidoRepository;
 import com.residencia.ecommerce.vo.CadastroClienteVO;
 import com.residencia.ecommerce.vo.ClienteVO;
 import com.residencia.ecommerce.vo.PedidoVO;
@@ -25,9 +24,6 @@ public class ClienteService {
 
     @Autowired
     public ClienteRepository clienteRepository;
-
-    @Autowired
-    public PedidoRepository pedidoRepository;
 
     @Autowired
     public EnderecoRepository enderecoRepository;
@@ -105,6 +101,22 @@ public class ClienteService {
 
 //******************************************************************************************************************
 
+    public String login(String username, String senha) {
+        Cliente cliente = clienteRepository.findByUsername(username);
+
+        if (cliente != null) {
+            if(cliente.getSenha().equals(senha)) {
+                return "Bem vindo, " + cliente.getNome() + "!";
+            } else {
+                return "Usuário/senha incorreto.";
+            }
+        } else {
+            return "Usuário/senha incorreto.";
+        }
+    }
+
+//******************************************************************************************************************
+
     private ClienteVO converteEntidadeParaVO(Cliente cliente) {
         ClienteVO clienteVO = new ClienteVO();
         List<PedidoVO> listPedidoVO = new ArrayList<>();
@@ -117,6 +129,7 @@ public class ClienteService {
         clienteVO.setCpf(cliente.getCpf());
         clienteVO.setTelefone(cliente.getTelefone());
         clienteVO.setDataNascimento(cliente.getDataNascimento());
+        clienteVO.setEndereco(cliente.getEnderecoByEnderecoId());
 
         for (Pedido lPedido : cliente.getPedidosByClienteId()) {
             PedidoVO pedidoVO = new PedidoVO();
@@ -174,38 +187,30 @@ public class ClienteService {
         cliente.setNome(cadastroClienteVO.getNome());
         cliente.setCpf(cadastroClienteVO.getCpf());
         cliente.setTelefone(cadastroClienteVO.getTelefone());
-//        cliente.setDataNascimento(cadastroClienteVO.getDataNascimento());
+        cliente.setDataNascimento(cadastroClienteVO.getDataNascimento());
 
         RestTemplate restTemplate = new RestTemplate();
         String uri = "http://viacep.com.br/ws/{cep}/json/";
         Map<String, String> params = new HashMap<>();
         params.put("cep", cadastroClienteVO.getCep());
-        cadastroClienteVO = restTemplate.getForObject(uri, CadastroClienteVO.class, params);
+        CadastroClienteVO cadCliVO = new CadastroClienteVO();
+        cadCliVO = restTemplate.getForObject(uri, CadastroClienteVO.class, params);
 
         Endereco endereco = new Endereco();
-        assert cadastroClienteVO != null;
-        endereco.setBairro(cadastroClienteVO.getBairro());
-        endereco.setCep(cadastroClienteVO.getCep());
-        endereco.setCidade(cadastroClienteVO.getCidade());
+        assert cadCliVO != null;
+        endereco.setBairro(cadCliVO.getBairro());
+        endereco.setCep(cadCliVO.getCep());
+        endereco.setCidade(cadCliVO.getLocalidade());
         endereco.setNumero(cadastroClienteVO.getNumero());
-        endereco.setRua(cadastroClienteVO.getRua());
+        endereco.setRua(cadCliVO.getLogradouro());
         endereco.setComplemento(cadastroClienteVO.getComplemento());
-        endereco.setUf(cadastroClienteVO.getUf());
+        endereco.setUf(cadCliVO.getUf());
 
 
         enderecoRepository.save(endereco);
         cliente.setEnderecoByEnderecoId(endereco);
         clienteRepository.save(cliente);
 
-
         return cliente;
     }
-
-//
-//        @PostMapping(value="/getCep/{cep}")
-//        public ResponseEntity<CadastroClienteVO> doObterCep(@PathVariable(name = "cep") String cep) {
-//
-//
-//            return new ResponseEntity<CadastroClienteVO>(cadastroClienteVO, HttpStatus.OK);
-//        }
 }
