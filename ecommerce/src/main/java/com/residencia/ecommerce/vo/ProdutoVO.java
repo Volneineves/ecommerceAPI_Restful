@@ -1,12 +1,10 @@
 package com.residencia.ecommerce.vo;
 
-import java.math.BigDecimal;
-
 public class ProdutoVO {
     private Integer produtoId;
     private String nomeProduto;
     private String descricaoProduto;
-    private BigDecimal precoProduto;
+    private Double precoProduto;
     private Integer qtdEstoque;
     private String imagem;
     private Integer categoria;
@@ -35,11 +33,11 @@ public class ProdutoVO {
         this.descricaoProduto = descricaoProduto;
     }
 
-    public BigDecimal getPrecoProduto() {
+    public Double getPrecoProduto() {
         return precoProduto;
     }
 
-    public void setPrecoProduto(BigDecimal precoProduto) {
+    public void setPrecoProduto(Double precoProduto) {
         this.precoProduto = precoProduto;
     }
 

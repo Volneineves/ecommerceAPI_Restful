@@ -1,6 +1,9 @@
 package com.residencia.ecommerce.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
@@ -21,7 +24,7 @@ public class Categoria {
         this.categoriaId = categoriaId;
     }
 
-
+    @NotBlank(message = "O campo 'nome da categoria' não pode ser nulo ou vazio.")
     @Column(name = "nome_categoria")
     public String getNomeCategoria() {
         return nomeCategoria;
@@ -31,7 +34,7 @@ public class Categoria {
         this.nomeCategoria = nomeCategoria;
     }
 
-
+    @NotBlank(message = "O campo 'descrição da cateogria' não pode ser nulo ou vazio.")
     @Column(name = "descricao_categoria")
     public String getDescricaoCategoria() {
         return descricaoCategoria;
@@ -41,6 +44,7 @@ public class Categoria {
         this.descricaoCategoria = descricaoCategoria;
     }
 
+    @JsonBackReference
     @OneToMany(mappedBy = "categoria")
     public List<Produto> getProdutosByCategoriaId() {
         return produtosByCategoriaId;

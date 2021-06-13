@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -18,6 +19,11 @@ public class ClienteController {
 
     @Autowired
     public ClienteService clienteService;
+
+    @GetMapping("/login")
+    public String login(@RequestParam String username, @RequestParam String senha) {
+        return clienteService.login(username, senha);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<ClienteVO> findById(@PathVariable Integer id) {
@@ -42,11 +48,12 @@ public class ClienteController {
         return clienteService.count();
     }
 
-    @PostMapping
-    public ResponseEntity<Cliente> save(@RequestBody CadastroClienteVO cadastroClienteVO) {
+    @PostMapping("/cadastro")
+    public ResponseEntity<Cliente> save(@Valid @RequestBody CadastroClienteVO cadastroClienteVO) {
         HttpHeaders headers = new HttpHeaders();
 
         Cliente newClienteVO = clienteService.save(cadastroClienteVO);
+
 
         if (null != newClienteVO)
             return new ResponseEntity<>(newClienteVO, headers, HttpStatus.OK);

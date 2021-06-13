@@ -139,9 +139,7 @@ public class CategoriaService {
 
             listProduto.add(produto);
         }
-            categoria.setProdutosByCategoriaId(listProduto);
+        categoria.setProdutosByCategoriaId(listProduto);
         return categoria;
     }
-
-
 }

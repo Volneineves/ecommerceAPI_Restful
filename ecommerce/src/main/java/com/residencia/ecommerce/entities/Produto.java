@@ -1,7 +1,9 @@
 package com.residencia.ecommerce.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
 
@@ -11,7 +13,7 @@ public class Produto {
     private Integer produtoId;
     private String nomeProduto;
     private String descricaoProduto;
-    private BigDecimal precoProduto;
+    private Double precoProduto;
     private Integer qtdEstoque;
     private Calendar dataCadastroProduto;
     private String imagem;
@@ -29,7 +31,6 @@ public class Produto {
         this.produtoId = produtoId;
     }
 
-
     @Column(name = "nome_produto")
     public String getNomeProduto() {
         return nomeProduto;
@@ -38,7 +39,6 @@ public class Produto {
     public void setNomeProduto(String nomeProduto) {
         this.nomeProduto = nomeProduto;
     }
-
 
     @Column(name = "descricao_produto")
     public String getDescricaoProduto() {
@@ -51,14 +51,13 @@ public class Produto {
 
 
     @Column(name = "preco_produto")
-    public BigDecimal getPrecoProduto() {
+    public Double getPrecoProduto() {
         return precoProduto;
     }
 
-    public void setPrecoProduto(BigDecimal precoProduto) {
+    public void setPrecoProduto(Double precoProduto) {
         this.precoProduto = precoProduto;
     }
-
 
     @Column(name = "qtd_estoque")
     public Integer getQtdEstoque() {
@@ -68,7 +67,6 @@ public class Produto {
     public void setQtdEstoque(Integer qtdEstoque) {
         this.qtdEstoque = qtdEstoque;
     }
-
 
     @Column(name = "data_cadastro_produto")
     public Calendar getDataCadastroProduto() {
@@ -88,6 +86,7 @@ public class Produto {
         this.imagem = imagem;
     }
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "categoria_id", referencedColumnName = "categoria_id", nullable = false)
     public Categoria getCategoria() {
@@ -98,6 +97,7 @@ public class Produto {
         this.categoria = categoria;
     }
 
+    @JsonBackReference
     @OneToMany(mappedBy = "produtoByProdutoId")
     public List<ProdutoPedido> getProdutoPedidos() {
         return produtoPedido;

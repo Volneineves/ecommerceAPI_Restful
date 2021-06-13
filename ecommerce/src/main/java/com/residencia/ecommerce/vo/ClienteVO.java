@@ -1,5 +1,7 @@
 package com.residencia.ecommerce.vo;
 
+import com.residencia.ecommerce.entities.Endereco;
+
 import java.util.Calendar;
 import java.util.List;
 
@@ -13,6 +15,15 @@ public class ClienteVO {
     private String telefone;
     private Calendar dataNascimento;
     private List<PedidoVO> pedidosByClienteId;
+    private Endereco endereco;
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
 
     public Integer getClienteId() {
         return clienteId;
