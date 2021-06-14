@@ -4,6 +4,15 @@ public class ProdutoPedidoVO {
     private Integer produtoId;
     private Integer quantidade;
     private Double preco;
+    private String nome;
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
     public Integer getProdutoId() {
         return produtoId;
@@ -27,5 +36,12 @@ public class ProdutoPedidoVO {
 
     public void setPreco(Double preco) {
         this.preco = preco;
+    }
+
+    @Override
+    public String toString() {
+        return
+                "\nNome: " + nome + "." +
+                        " Quantidade: " + quantidade;
     }
 }

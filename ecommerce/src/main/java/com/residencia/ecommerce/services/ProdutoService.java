@@ -84,7 +84,7 @@ public class ProdutoService {
     }
 
     private void updateDados(Produto newProduto, Produto produto) {
-        newProduto.setProdutoId(produto.getProdutoId());
+        newProduto.setProdutoId(produtoRepository.findById(produto.getProdutoId()).get().getProdutoId());
         newProduto.setNomeProduto(produto.getNomeProduto());
         newProduto.setDescricaoProduto(produto.getDescricaoProduto());
         newProduto.setPrecoProduto(produto.getPrecoProduto());

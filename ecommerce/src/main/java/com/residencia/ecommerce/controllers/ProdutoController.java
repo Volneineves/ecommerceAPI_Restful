@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -53,7 +54,7 @@ public class ProdutoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Produto> update(@PathVariable Integer id, @RequestBody Produto produto) {
+    public ResponseEntity<Produto> update(@PathVariable Integer id, @Valid @RequestBody Produto produto) {
         HttpHeaders headers = new HttpHeaders();
         return new ResponseEntity<>(produtoService.update(id, produto), headers, HttpStatus.OK);
     }
