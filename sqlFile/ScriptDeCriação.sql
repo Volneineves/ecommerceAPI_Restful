@@ -1,83 +1,117 @@
 CREATE DATABASE ecommerce_api_grupo7;
 
-CREATE table endereco
-(
-	endereco_id serial not null primary key,
-	cep CHAR(8),
-	rua VARCHAR(100),
-	bairro VARCHAR(30),
-	cidade VARCHAR(30),
-	numero VARCHAR(10),
-	complemento VARCHAR(100),
-	UF CHAR(2)
+-- public.categoria definition
+
+-- Drop table
+
+-- DROP TABLE public.categoria;
+
+CREATE TABLE public.categoria (
+	categoria_id serial NOT NULL,
+	nome_categoria varchar(20) NULL,
+	descricao_categoria varchar(200) NULL,
+	CONSTRAINT categoria_pkey PRIMARY KEY (categoria_id)
 );
 
-create table cliente
-(
-	cliente_id SERIAL not null primary key,
-	email CHAR(35),
-	username VARCHAR(15),
-	senha VARCHAR(20),
-	nome VARCHAR(200),
-	cpf CHAR(11) not null unique,
-	telefone VARCHAR(11),
-	data_nascimento DATE
+-- public.cliente definition
+
+-- Drop table
+
+-- DROP TABLE public.cliente;
+
+CREATE TABLE public.cliente (
+	cliente_id serial NOT NULL,
+	email varchar(50) NULL,
+	username varchar(15) NULL,
+	senha varchar(20) NULL,
+	nome varchar(200) NULL,
+	cpf varchar(11) NOT NULL,
+	telefone varchar(11) NULL,
+	data_nascimento date NULL,
+	endereco_id int4 NOT NULL,
+	CONSTRAINT cliente_cpf_key UNIQUE (cpf),
+	CONSTRAINT cliente_pkey PRIMARY KEY (cliente_id)
 );
 
-create table pedido
-(
-	pedido_id SERIAL not null primary key,
-	numero_pedido INT,
-	lista_produtos_do_pedido varchar(200),
-	valor_total_pedido MONEY,
-	data_pedido DATE not null default now(),
-	status boolean
+-- public.endereco definition
+
+-- Drop table
+
+-- DROP TABLE public.endereco;
+
+CREATE TABLE public.endereco (
+	endereco_id serial NOT NULL,
+	cep varchar(9) NULL,
+	rua varchar(100) NULL,
+	bairro varchar(30) NULL,
+	cidade varchar(30) NULL,
+	numero varchar(10) NULL,
+	complemento varchar(100) NULL,
+	uf varchar(2) NULL,
+	CONSTRAINT endereco_pkey PRIMARY KEY (endereco_id)
 );
 
-create table produto_pedido
-(
-	produto_pedido_id SERIAL not null primary key,
-	qtd_produto_pedido INT,
-	preco_produto_pedido MONEY
+-- public.pedido definition
+
+-- Drop table
+
+-- DROP TABLE public.pedido;
+
+CREATE TABLE public.pedido (
+	pedido_id serial NOT NULL,
+	numero_pedido int4 NULL,
+	valor_total_pedido numeric NULL,
+	data_pedido date NOT NULL DEFAULT now(),
+	status bool NULL,
+	cliente_id int4 NOT NULL,
+	CONSTRAINT pedido_pkey PRIMARY KEY (pedido_id)
 );
 
-create table produto
-(
-	produto_id SERIAL not null primary key,
-	nome_produto VARCHAR(50),
-	descricao_produto VARCHAR(200),
-	preco_produto MONEY,
-	qtd_estoque INT,
-	data_cadastro_produto DATE,
-	imagem BYTEA
+
+-- public.pedido foreign keys
+
+ALTER TABLE public.pedido ADD CONSTRAINT pedido_cliente_id_fkey FOREIGN KEY (cliente_id) REFERENCES public.cliente(cliente_id);
+
+-- public.produto definition
+
+-- Drop table
+
+-- DROP TABLE public.produto;
+
+CREATE TABLE public.produto (
+	produto_id serial NOT NULL,
+	nome_produto varchar(50) NULL,
+	descricao_produto varchar(200) NULL,
+	preco_produto numeric NULL,
+	qtd_estoque int4 NULL,
+	data_cadastro_produto date NULL DEFAULT now(),
+	categoria_id int4 NOT NULL,
+	imagem varchar NULL,
+	CONSTRAINT produto_pkey PRIMARY KEY (produto_id)
 );
 
-create table categoria 
-(
-	categoria_id SERIAL not null primary key,
-	nome_categoria VARCHAR(20),
-	descricao_categoria VARCHAR(200)
+
+-- public.produto foreign keys
+
+ALTER TABLE public.produto ADD CONSTRAINT produto_categoria_id_fkey FOREIGN KEY (categoria_id) REFERENCES public.categoria(categoria_id);
+
+-- public.produto_pedido definition
+
+-- Drop table
+
+-- DROP TABLE public.produto_pedido;
+
+CREATE TABLE public.produto_pedido (
+	produto_pedido_id serial NOT NULL,
+	qtd_produto_pedido int4 NULL,
+	preco_produto_pedido numeric NULL,
+	produto_id int4 NULL,
+	pedido_id int4 NULL,
+	CONSTRAINT produto_pedido_pkey PRIMARY KEY (produto_pedido_id)
 );
 
---Adição de chaves estrangeiras:
 
-alter table cliente add endereco_id INT not null references 
-endereco (endereco_id);
+-- public.produto_pedido foreign keys
 
-alter table pedido add cliente_id INT not null references 
-cliente (cliente_id);
-
-alter table produto_pedido add produto_id INT not null references 
-produto (produto_id);
-
-alter table produto_pedido add pedido_id INT not null references 
-pedido (pedido_id);
-
-alter table produto add categoria_id INT not null references 
-categoria (categoria_id);
-
---Alterações 
-alter table produto drop column imagem;
-alter table produto add imagem VARCHAR;
-
-alter table pedido drop column lista_produtos_do_pedido;
+ALTER TABLE public.produto_pedido ADD CONSTRAINT produto_pedido_pedido_id_fkey FOREIGN KEY (pedido_id) REFERENCES public.pedido(pedido_id);
+ALTER TABLE public.produto_pedido ADD CONSTRAINT produto_pedido_produto_id_fkey FOREIGN KEY (produto_id) REFERENCES public.produto(produto_id);
