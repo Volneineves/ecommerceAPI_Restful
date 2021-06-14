@@ -1,6 +1,7 @@
 package com.residencia.ecommerce.controllers;
 
 import com.residencia.ecommerce.entities.Pedido;
+import com.residencia.ecommerce.exceptions.EmailException;
 import com.residencia.ecommerce.services.PedidoService;
 import com.residencia.ecommerce.vo.PedidoVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,29 +29,24 @@ public class PedidoController {
 //    }
 
     @PostMapping
-    public ResponseEntity<Pedido> save(@RequestBody PedidoVO pedidoVO){
+    public ResponseEntity<Pedido> save(@RequestBody PedidoVO pedidoVO) {
 
         HttpHeaders headers = new HttpHeaders();
         Pedido novoPedido = pedidoService.save(pedidoVO);
 
-        if(null != novoPedido)
+        if (null != novoPedido)
             return new ResponseEntity<>(novoPedido, headers, HttpStatus.OK);
         else
             return new ResponseEntity<>(novoPedido, headers, HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping("/{id}")
-    public Pedido save(@RequestBody PedidoVO pedidoVO, @PathVariable Integer id) {
-        return pedidoService.save(pedidoVO);
+    public PedidoVO update(@RequestBody PedidoVO pedidoVO, @PathVariable Integer id) throws EmailException {
+        return pedidoService.update(pedidoVO, id);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Pedido> delete(@PathVariable Integer id) {
-        try {
-            pedidoService.delete(id);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok().build();
+    public void deleteById (@PathVariable Integer id){
+        pedidoService.delete(id);
     }
 }

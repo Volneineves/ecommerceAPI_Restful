@@ -3,6 +3,7 @@ package com.residencia.ecommerce.services;
 
 import com.residencia.ecommerce.entities.Pedido;
 import com.residencia.ecommerce.entities.ProdutoPedido;
+import com.residencia.ecommerce.exceptions.EmailException;
 import com.residencia.ecommerce.repositories.ClienteRepository;
 import com.residencia.ecommerce.repositories.PedidoRepository;
 import com.residencia.ecommerce.repositories.ProdutoPedidoRepository;
@@ -52,15 +53,45 @@ public class PedidoService {
         return pedidoRepository.save(newPedido);
     }
 
-    public PedidoVO update(PedidoVO pedidoVO, Integer id) {
-        Pedido pedido = converteVOParaEntidade(pedidoVO, id);
-        Pedido novoPedido = pedidoRepository.save(pedido);
-        return converteEntidadeParaVO(novoPedido);
+    public PedidoVO update(PedidoVO pedidoVO, Integer id) throws EmailException {
+        Pedido pedido = pedidoRepository.findById(id).get();
+        if (pedido.getStatus()) {
+            List<ProdutoPedido> listaProdutoPedido = produtoPedidoRepository.findAllByPedidoByPedidoId(pedido);
+            List<ProdutoPedidoVO> listaProdutoPedidoVO = pedidoVO.getProdutoPedidosByPedidoId();
+
+            Calendar dataAtualizacao = Calendar.getInstance();
+            pedido.setDataPedido(dataAtualizacao);
+
+            double valorTotal = pedido.getValorTotalPedido();
+            if (pedidoVO.getProdutoPedidosByPedidoId() != null) {
+                for (ProdutoPedidoVO produtoPedidoVO : listaProdutoPedidoVO) {
+                    ProdutoPedido produtoPedido = new ProdutoPedido();
+                    produtoPedido.setPedidoByPedidoId(pedido);
+                    produtoPedido.setProdutoByProdutoId(produtoRepository.findById(produtoPedidoVO.getProdutoId()).get());
+                    produtoPedido.setPrecoProdutoPedido(produtoRepository.findById(produtoPedidoVO.getProdutoId()).get().getPrecoProduto());
+                    produtoPedido.setQtdProdutoPedido(produtoPedidoVO.getQuantidade());
+                    produtoPedidoVO.setNome(produtoRepository.findById(produtoPedidoVO.getProdutoId()).get().getNomeProduto());
+                    listaProdutoPedido.add(produtoPedido);
+                    produtoPedidoRepository.save(produtoPedido);
+
+                    double preco = produtoRepository.findById(produtoPedidoVO.getProdutoId()).get().getPrecoProduto() * produtoPedidoVO.getQuantidade();
+                    valorTotal += preco;
+                    pedido.setValorTotalPedido(valorTotal);
+                }
+            }
+            if (listaProdutoPedido != null)
+            pedido.setProdutoPedidosByPedidoId(listaProdutoPedido);
+            pedido.setStatus(false);
+            pedidoRepository.save(pedido);
+            emailService.sendMail(pedido, pedidoVO);
+        }
+        return converteEntidadeParaVO(pedido);
     }
 
     public Pedido converteVOParaEntidade(PedidoVO pedidoVO, Integer id) {
         Pedido pedido = new Pedido();
         List<ProdutoPedidoVO> listPedido = pedidoVO.getProdutoPedidosByPedidoId();
+        List<ProdutoPedido> listProdPedido = new ArrayList<>();
 
         Calendar data = Calendar.getInstance();
 
@@ -76,9 +107,8 @@ public class PedidoService {
             double preco = produtoRepository.findById(produtoPedidoVO.getProdutoId()).get().getPrecoProduto() * produtoPedidoVO.getQuantidade();
             valorTotal += preco;
             pedido.setValorTotalPedido(valorTotal);
-
         }
-            pedidoRepository.save(pedido);
+        pedidoRepository.save(pedido);
 
         for (ProdutoPedidoVO produtoPedidoVO : listPedido) {
             ProdutoPedido produtoPedido = new ProdutoPedido();
@@ -89,22 +119,21 @@ public class PedidoService {
             produtoPedido.setPrecoProdutoPedido(produtoPedidoVO.getPreco());
 
             produtoPedidoVO.setPreco(produtoRepository.findById(produtoPedidoVO.getProdutoId()).get().getPrecoProduto());
+            produtoPedidoVO.setNome(produtoRepository.findById(produtoPedidoVO.getProdutoId()).get().getNomeProduto());
 
+            pedido.setProdutoPedidosByPedidoId(listProdPedido);
             produtoPedido.setPrecoProdutoPedido(produtoPedidoVO.getPreco());
             produtoPedidoRepository.save(produtoPedido);
-
         }
-
         pedido.setNumeroPedido(pedido.getPedidoId());
         pedidoRepository.save(pedido);
-        emailService.sendMail(pedido.getClienteByClienteId().getEmail(), pedido.toString(), pedido.getClienteByClienteId().getNome());
 
         return pedido;
     }
 
     public void delete(Integer id) {
-        if (id != null)
-            pedidoRepository.deleteById(id);
+        Pedido pedido = pedidoRepository.findById(id).get();
+        pedidoRepository.deleteById(pedido.getPedidoId());
     }
 
     private PedidoVO converteEntidadeParaVO(Pedido pedido) {

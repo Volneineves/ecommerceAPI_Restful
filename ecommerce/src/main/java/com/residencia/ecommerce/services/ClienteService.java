@@ -105,7 +105,7 @@ public class ClienteService {
         Cliente cliente = clienteRepository.findByUsername(username);
 
         if (cliente != null) {
-            if(cliente.getSenha().equals(senha)) {
+            if (cliente.getSenha().equals(senha)) {
                 return "Bem vindo, " + cliente.getNome() + "!";
             } else {
                 return "Usuário/senha incorreto.";

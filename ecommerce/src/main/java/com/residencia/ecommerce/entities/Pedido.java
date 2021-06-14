@@ -90,17 +90,4 @@ public class Pedido {
     public void setProdutoPedidosByPedidoId(List<ProdutoPedido> produtoPedidosByPedidoId) {
         this.produtoPedidosByPedidoId = produtoPedidosByPedidoId;
     }
-
-    @Override
-    public String toString() {
-        return "Pedido{" +
-                "pedidoId=" + pedidoId +
-                ", numeroPedido=" + numeroPedido +
-                ", valorTotalPedido=" + valorTotalPedido +
-                ", dataPedido=" + dataPedido +
-                ", status=" + status +
-                ", clienteByClienteId=" + clienteByClienteId +
-                ", produtoPedidosByPedidoId=" + produtoPedidosByPedidoId +
-                '}';
-    }
 }

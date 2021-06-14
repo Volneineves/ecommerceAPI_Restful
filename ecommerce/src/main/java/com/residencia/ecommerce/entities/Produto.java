@@ -88,7 +88,7 @@ public class Produto {
 
     @JsonManagedReference
     @ManyToOne
-    @JoinColumn(name = "categoria_id", referencedColumnName = "categoria_id", nullable = false)
+    @JoinColumn(name = "categoria_id", referencedColumnName = "categoria_id")
     public Categoria getCategoria() {
         return categoria;
     }
